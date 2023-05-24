@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/HealthyApp/.vs/HealthyApp/FileContentIndex
+/HealthyApp/.vs/HealthyApp/v17
+/HealthyApp/HealthyApp/bin/Debug/net7.0
+/HealthyApp/HealthyApp/obj
+*.user
+/HealthyApp/HealthyApp.Infra/bin/Debug/net7.0
+/HealthyApp/HealthyApp.Infra/obj
