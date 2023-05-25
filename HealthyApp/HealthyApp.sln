@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyApp.Infra", "Healthy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyApp.Application", "HealthyApp.App\HealthyApp.Application.csproj", "{00F8D853-7183-4909-8C40-724801B3BF07}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthyApp.Domain", "HealthyApp.Domain\HealthyApp.Domain.csproj", "{DC6ECF60-911D-45CD-A65B-145D076BBAAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{00F8D853-7183-4909-8C40-724801B3BF07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00F8D853-7183-4909-8C40-724801B3BF07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00F8D853-7183-4909-8C40-724801B3BF07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC6ECF60-911D-45CD-A65B-145D076BBAAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC6ECF60-911D-45CD-A65B-145D076BBAAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC6ECF60-911D-45CD-A65B-145D076BBAAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC6ECF60-911D-45CD-A65B-145D076BBAAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
