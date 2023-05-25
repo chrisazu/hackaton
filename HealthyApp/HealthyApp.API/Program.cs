@@ -1,4 +1,5 @@
 using HealthyApp.Infra;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,3 +31,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void RegisteredServices(IServiceCollection services)
+{
+	services.AddTransient<Mediator>();
+	services.AddSingleton<ISender, ScopedSender<Mediator>>();
+}
