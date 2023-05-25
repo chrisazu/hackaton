@@ -4,6 +4,7 @@ using HealthyApp.Infra;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthyApp.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230525210422_AddAspnetId")]
+    partial class AddAspnetId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,36 +90,6 @@ namespace HealthyApp.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Levels");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Beginner",
-                            Name = "Beginner",
-                            Number = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Intermediate",
-                            Name = "Intermediate",
-                            Number = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Upper Intermediate",
-                            Name = "Upper Intermediate",
-                            Number = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Advanced",
-                            Name = "Advanced",
-                            Number = 4
-                        });
                 });
 
             modelBuilder.Entity("HealthyApp.Domain.Models.Progress", b =>

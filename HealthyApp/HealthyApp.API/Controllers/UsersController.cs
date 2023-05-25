@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+
+using HealthyApp.Application.Models.Requests;
+using HealthyApp.Application.Services.HealthyUser.Commands;
 using HealthyApp.Application.Services.HealthyUser.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -34,17 +37,20 @@ namespace HealthyApp.API.Controllers
 			}
 		}
 
-		//[HttpPost]
-		//public async Task<ActionResult<User>> PostUser(User user)
-		//{
-		//	if (_context.HealthyUsers == null)
-		//	{
-		//		return Problem("Entity set 'ApplicationDbContext.HealthyUsers'  is null.");
-		//	}
-		//	_context.HealthyUsers.Add(user);
-		//	await _context.SaveChangesAsync();
+		[HttpPost]
+		public async Task<IResult> PostUser(UserRequest userRequest)
+		{
+			try
+			{
+				var command = _mapper.Map<CreateHealthyUserCommand>(userRequest);
+				var response = await _sender.Send(command);
 
-		//	return CreatedAtAction("GetUser", new { id = user.Id }, user);
-		//}
+				return response is not null ? Results.Ok(response) : Results.NoContent();
+			}
+			catch (Exception ex)
+			{
+				return Results.BadRequest(ex.Message);
+			}
+		}
 	}
 }

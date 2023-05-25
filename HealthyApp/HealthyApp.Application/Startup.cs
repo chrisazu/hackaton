@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace HealthyApp.Application

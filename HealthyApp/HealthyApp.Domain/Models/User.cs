@@ -7,6 +7,9 @@ namespace HealthyApp.Domain.Models
 		[Key]
 		public int Id { get; set; }
 
+        [Required]
+        public string AspNetUserId { get; set; }
+
 		[Required]
 		[StringLength(100)]
 		public required string Name { get; set; }

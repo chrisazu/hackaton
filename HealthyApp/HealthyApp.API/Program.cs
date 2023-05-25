@@ -1,3 +1,5 @@
+using HealthyApp.API;
+using HealthyApp.API.Extensions;
 using HealthyApp.Infra;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +12,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMapperConfig();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+RegisteredServices(builder.Services);
 
 var app = builder.Build();
 
@@ -34,6 +35,8 @@ app.Run();
 
 void RegisteredServices(IServiceCollection services)
 {
+	HealthyApp.Application.Startup.Load(services);
+	HealthyApp.Infra.Startup.Load(services);
 	services.AddTransient<Mediator>();
 	services.AddSingleton<ISender, ScopedSender<Mediator>>();
 }

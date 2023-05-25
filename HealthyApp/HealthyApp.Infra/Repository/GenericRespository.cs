@@ -14,9 +14,18 @@ namespace HealthyApp.Infra.Repository
 			_dbSet = _dbContext.Set<T>();
 		}
 
-		public async Task<T> GetById(int id, CancellationToken cancellationToken)
+
+        public async Task<T> GetById(int id, CancellationToken cancellationToken)
 		{
 			return await _dbSet.FindAsync(id, cancellationToken);
 		}
-	}
+
+
+        public async Task<T> Create(T entity, CancellationToken cancellationToken)
+        {
+            await _dbSet.AddAsync(entity, cancellationToken);
+			_dbContext.SaveChanges();
+			return entity;
+        }
+    }
 }

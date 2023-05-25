@@ -5,6 +5,7 @@ namespace HealthyApp.Domain.Models
 	public class Level
 	{
 		[Required]
+		[Key]
 		public int Id { get; set; }
 
 		[Required]
