@@ -97,8 +97,15 @@ namespace HealthyApp.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-        }
 
+			[Required]
+			[StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
+			public string Name { get; set; }
+
+			[Required]
+			[StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
+			public string LastName { get; set; }
+		}
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -143,6 +150,8 @@ namespace HealthyApp.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
+
+                    // llamar a la api para crear el huser
                 }
                 foreach (var error in result.Errors)
                 {
