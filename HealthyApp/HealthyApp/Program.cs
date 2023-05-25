@@ -1,4 +1,4 @@
-using HealthyApp.Front.Areas.Identity;
+using HealthyApp.Areas.Identity;
 using HealthyApp.Infra;
 
 using Microsoft.AspNetCore.Components.Authorization;
