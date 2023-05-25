@@ -16,5 +16,9 @@ namespace HealthyApp.Infra
 		public DbSet<Goal> Goals { get; set; }
 
 		public DbSet<Reward> Rewards { get; set; }
+
+		public DbSet<Level> Levels { get; set; }
+
+		public DbSet<Progress> Progresses { get; set; }
 	}
 }

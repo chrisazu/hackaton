@@ -4,6 +4,7 @@ using HealthyApp.Infra;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthyApp.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230525165651_NewEntities")]
+    partial class NewEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,6 +68,27 @@ namespace HealthyApp.Infra.Migrations
                     b.ToTable("Goals");
                 });
 
+            modelBuilder.Entity("HealthyApp.Domain.Models.GoalProgress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("GoalId")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("Value")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GoalId");
+
+                    b.ToTable("GoalProgresses");
+                });
+
             modelBuilder.Entity("HealthyApp.Domain.Models.Level", b =>
                 {
                     b.Property<int>("Id")
@@ -87,27 +111,6 @@ namespace HealthyApp.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Levels");
-                });
-
-            modelBuilder.Entity("HealthyApp.Domain.Models.Progress", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("GoalId")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("Value")
-                        .HasColumnType("time");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GoalId");
-
-                    b.ToTable("Progresses");
                 });
 
             modelBuilder.Entity("HealthyApp.Domain.Models.Reward", b =>
@@ -375,7 +378,7 @@ namespace HealthyApp.Infra.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("HealthyApp.Domain.Models.Progress", b =>
+            modelBuilder.Entity("HealthyApp.Domain.Models.GoalProgress", b =>
                 {
                     b.HasOne("HealthyApp.Domain.Models.Goal", null)
                         .WithMany("Progresses")

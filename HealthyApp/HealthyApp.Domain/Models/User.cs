@@ -16,5 +16,8 @@ namespace HealthyApp.Domain.Models
 		public required string LastName { get; set; }	
 	
 		public List<Goal> Goals { get; set; }
+
+		[Required]
+		public required Level Level { get; set; }
 	}
 }
