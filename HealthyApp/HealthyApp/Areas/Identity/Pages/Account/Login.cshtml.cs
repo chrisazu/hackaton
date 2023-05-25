@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace HealthyApp.Front.Areas.Identity.Pages.Account
+namespace HealthyApp.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
