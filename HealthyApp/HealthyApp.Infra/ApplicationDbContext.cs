@@ -9,10 +9,9 @@ namespace HealthyApp.Infra
 	{
 		private readonly IConfiguration _config;
 
-		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration config)
-			: base(options)
+		public ApplicationDbContext(/*IConfiguration config*/)
 		{
-			_config = config;
+			//_config = config;
 		}
 
 		public DbSet<User> HealthyUsers { get; set; }
@@ -29,7 +28,7 @@ namespace HealthyApp.Infra
 		{
 			if (!optionsBuilder.IsConfigured)
 			{
-				optionsBuilder.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
+				optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=HealthyAppDB;Trusted_Connection=True;MultipleActiveResultSets=true");
 			}
 		}
 	}
