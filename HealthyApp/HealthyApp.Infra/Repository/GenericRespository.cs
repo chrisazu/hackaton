@@ -25,5 +25,12 @@ namespace HealthyApp.Infra.Repository
 			_dbContext.SaveChanges();
 			return entity;
         }
+
+        public async Task<T> Update(T entity, CancellationToken cancellationToken)
+        {
+            _dbSet.Update(entity);
+			await _dbContext.SaveChangesAsync();
+            return entity;
+        }
     }
 }

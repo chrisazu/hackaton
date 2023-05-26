@@ -22,5 +22,10 @@ namespace HealthyApp.Domain.Models
 
 		[Required]
 		public required Level Level { get; set; }
-	}
+
+        public User()
+        {
+            Goals = new List<Goal>();
+        }
+    }
 }
