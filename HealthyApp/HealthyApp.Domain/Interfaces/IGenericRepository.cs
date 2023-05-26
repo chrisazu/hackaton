@@ -5,5 +5,7 @@
 		Task<T> GetById(int id, CancellationToken cancellationToken);
 
         Task<T> Create(T entity, CancellationToken cancellationToken);
+
+        Task<T> Update(T entity, CancellationToken cancellationToken);
     }
 }
