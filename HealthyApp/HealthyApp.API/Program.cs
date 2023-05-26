@@ -1,8 +1,7 @@
 using HealthyApp.API;
 using HealthyApp.API.Extensions;
-using HealthyApp.Infra;
+
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

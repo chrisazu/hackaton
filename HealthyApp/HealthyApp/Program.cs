@@ -1,9 +1,11 @@
 using HealthyApp.Areas.Identity;
+using HealthyApp.Extensions;
 using HealthyApp.Infra;
+using HealthyApp.Services;
+using HealthyApp.Services.Interfaces;
 
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,17 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 	.AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddScoped(sp =>
+        new HttpClient
+        {
+            BaseAddress = new Uri(builder.Configuration.GetValue<string>("BackendUri"))
+        });
+
+
+builder.Services.AddTransient<IHealthyUserService, HealthyUserService>();
+
+
+builder.Services.AddMapperConfig();
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();

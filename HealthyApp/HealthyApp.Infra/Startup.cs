@@ -17,7 +17,8 @@ namespace HealthyApp.Infra
         {
             services.AddDbContext<ApplicationDbContext>();
             services.AddScoped<IHealthyUserRepository, HealthyUserRepository>();
-           
+            services.AddScoped<ILevelRepository, LevelRepository>();
+
         }
     }
 }

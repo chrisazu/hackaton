@@ -10,11 +10,18 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+
+using AutoMapper;
+
+using HealthyApp.Models.Requests;
+using HealthyApp.Services.Interfaces;
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
@@ -29,13 +36,17 @@ namespace HealthyApp.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IHealthyUserService _healthyUserService;
+        private readonly IMapper _mapper;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IHealthyUserService healthyUserService,
+            IMapper mapper)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -43,6 +54,8 @@ namespace HealthyApp.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _healthyUserService = healthyUserService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -141,6 +154,12 @@ namespace HealthyApp.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                    // llamar a la api para crear el huser
+                    var request = _mapper.Map<HealthyUserRequest>(Input);
+                    request.AspNetUserId = userId;
+                    var response = await _healthyUserService.Create(request);
+
+
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
@@ -151,7 +170,7 @@ namespace HealthyApp.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
 
-                    // llamar a la api para crear el huser
+                    
                 }
                 foreach (var error in result.Errors)
                 {

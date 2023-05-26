@@ -15,6 +15,10 @@ namespace HealthyApp.API.Profiles
             CreateMap<User, HealthyUserResponse>();
             CreateMap<CreateHealthyUserCommand, User>();
 
+            CreateMap<Level, LevelResponse>();
+
+            CreateMap<Reward, RewardResponse>();
+
         }
 
     }
