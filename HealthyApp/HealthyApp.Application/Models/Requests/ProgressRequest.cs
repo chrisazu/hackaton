@@ -2,6 +2,6 @@
 {
 	public class ProgressRequest
 	{
-		public required TimeSpan Value { get; set; }
+		public required int DurationInMinutes { get; set; } = default;		
 	}
 }

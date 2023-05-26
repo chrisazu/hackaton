@@ -3,7 +3,9 @@
 using HealthyApp.Application.Models.Requests;
 using HealthyApp.Application.Services.HealthyUser.Commands;
 using HealthyApp.Application.Services.HealthyUser.Queries;
+
 using MediatR;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthyApp.API.Controllers

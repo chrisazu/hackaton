@@ -10,7 +10,6 @@ namespace HealthyApp.Application.Services.Goals.Commands
 {
     public class CreateGoalCommandHandler : IRequestHandler<CreateGoalCommand, GoalResponse>
     {
-
         private readonly IHealthyUserRepository _healthyUserRepository;
         private readonly IMapper _mapper;
 
@@ -20,16 +19,13 @@ namespace HealthyApp.Application.Services.Goals.Commands
             _mapper = mapper;
         }
 
-
-
-
         public async Task<GoalResponse> Handle(CreateGoalCommand request, CancellationToken cancellationToken)
         {
             var user = await _healthyUserRepository.GetById(request.UserId, cancellationToken);
 
             if (user == null) { throw new ArgumentNullException("User not found"); }
 
-            Goal goal = _mapper.Map<Goal>(request);
+            var goal = _mapper.Map<Goal>(request);
 
             user.Goals.Add(goal);
 

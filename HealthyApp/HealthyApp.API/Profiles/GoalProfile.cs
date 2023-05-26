@@ -7,7 +7,7 @@ using HealthyApp.Domain.Models;
 
 namespace HealthyApp.API.Profiles
 {
-    public class GoalProfile : Profile
+	public class GoalProfile : Profile
     {
         public GoalProfile()
         {
@@ -15,7 +15,6 @@ namespace HealthyApp.API.Profiles
                 .ForMember(m => m.Frequency, dest => dest.MapFrom(src => (GoalFrequency)Enum.Parse(typeof(GoalFrequency), src.Frequency)))
                 .ForMember(m => m.Type, dest => dest.MapFrom(src => (GoalType)Enum.Parse(typeof(GoalType), src.Type)))
                 .ForMember(m => m.Duration, dest => dest.MapFrom(src => TimeSpan.FromMinutes(src.DurationInMinutes)));
-
 
             CreateMap<CreateGoalCommand, Goal>();
         }

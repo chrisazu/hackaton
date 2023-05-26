@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
+
 using HealthyApp.Application.Models.Requests;
-using HealthyApp.Application.Services.HealthyUser.Commands;
-using HealthyApp.Application.Services.Progress.Commands;
+using HealthyApp.Application.Services.GoalProgress.Commands;
+
 using MediatR;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthyApp.API.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/goal/{goalId}/[controller]")]
 	[ApiController]
 	public class ProgressController : ControllerBase
 	{
@@ -21,11 +23,14 @@ namespace HealthyApp.API.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IResult> PostProgress(ProgressRequest progressRequest)
+		public async Task<IResult> PostProgress([FromRoute] int goalId, ProgressRequest progressRequest)
 		{
 			try
 			{
-				var command = _mapper.Map<CreateProgressCommand>(progressRequest);
+				var command = _mapper.Map<CreateProgressAndUpdateLevelCommand>(progressRequest);
+
+				command.GoalId = goalId;
+
 				var response = await _sender.Send(command);
 
 				return response is not null ? Results.Ok(response) : Results.NoContent();

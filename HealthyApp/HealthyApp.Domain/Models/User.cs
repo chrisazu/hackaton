@@ -27,5 +27,14 @@ namespace HealthyApp.Domain.Models
         {
             Goals = new List<Goal>();
         }
+
+		public void UpdateLevel()
+		{
+			if (Goals != null)
+			{
+				Goals.All(a => a.Status == Enums.GoalStatus.Accomplished);
+				//Level.id ++
+			}
+		}
     }
 }

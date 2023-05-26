@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthyApp.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230525221603_InsertLevelData")]
+    [Migration("20230526141515_InsertLevelData")]
     partial class InsertLevelData
     {
         /// <inheritdoc />
@@ -95,30 +95,72 @@ namespace HealthyApp.Infra.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Beginner",
+                            Description = "Estoy como Leonardo DiCaprio",
                             Name = "Beginner",
                             Number = 1
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Intermediate",
+                            Description = "Estoy como Emma Stone",
                             Name = "Intermediate",
                             Number = 2
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Upper Intermediate",
+                            Description = "Estoy como Chris Pratt",
                             Name = "Upper Intermediate",
                             Number = 3
                         },
                         new
                         {
                             Id = 4,
-                            Description = "Advanced",
+                            Description = "Estoy como Scarlett Johansson",
                             Name = "Advanced",
                             Number = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Estoy como Dwayne Johnson",
+                            Name = "Skilled",
+                            Number = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Estoy como Angelina Jolie",
+                            Name = "Expert",
+                            Number = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Estoy como Tom Hardy",
+                            Name = "Elite",
+                            Number = 7
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Estoy como Gal Gadot",
+                            Name = "Grandmaster",
+                            Number = 8
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "Estoy como Chris Hemsworth",
+                            Name = "Masterful",
+                            Number = 8
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "Estoy como Arnold Schwarzenegger",
+                            Name = "Champion",
+                            Number = 8
                         });
                 });
 

@@ -1,4 +1,6 @@
 ﻿using HealthyApp.Domain.Enums;
+using HealthyApp.Domain.Interfaces;
+
 using System.ComponentModel.DataAnnotations;
 
 namespace HealthyApp.Domain.Models
@@ -41,7 +43,7 @@ namespace HealthyApp.Domain.Models
 
 			Status = GoalStatus.OnProgress;
 
-			if (Progresses.Sum(s => s.Value.TotalHours) >= Duration.TotalHours)
+			if (Progresses.Sum(s => s.Value.TotalHours) >= Duration.TotalHours * TimesPerFrequency)
 			{
 				Status = GoalStatus.Accomplished;
 			}			

@@ -18,6 +18,7 @@ namespace HealthyApp.Application.Services.Goals.Commands
         public int TimesPerFrequency { get; set; } = 0;
 
         public TimeSpan Duration { get; set; } = default;
+
         public int UserId { get; set; }
     }
 }

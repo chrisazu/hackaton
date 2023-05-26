@@ -29,4 +29,8 @@
     <ProjectReference Include="..\HealthyApp.Infra\HealthyApp.Infra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\NewFolder\" />
+  </ItemGroup>
+
 </Project>

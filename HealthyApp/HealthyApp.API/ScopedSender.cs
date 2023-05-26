@@ -1,10 +1,8 @@
-﻿using Azure.Core;
-
-using MediatR;
+﻿using MediatR;
 
 namespace HealthyApp.API
 {
-    public record ScopedSender<TSender>(IServiceProvider Provider)
+	public record ScopedSender<TSender>(IServiceProvider Provider)
     : ISender where TSender : ISender
     {
         public async Task<TResponse> Send<TResponse>(
