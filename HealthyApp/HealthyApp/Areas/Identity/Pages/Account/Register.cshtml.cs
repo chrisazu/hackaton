@@ -159,7 +159,6 @@ namespace HealthyApp.Areas.Identity.Pages.Account
                     request.AspNetUserId = userId;
                     var response = await _healthyUserService.Create(request);
 
-
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
@@ -168,9 +167,7 @@ namespace HealthyApp.Areas.Identity.Pages.Account
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
-                    }
-
-                    
+                    }                    
                 }
                 foreach (var error in result.Errors)
                 {

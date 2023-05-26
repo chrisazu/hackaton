@@ -1,22 +1,22 @@
-﻿using System.Web.Http;
-
-using HealthyApp.Models.Requests;
+﻿using HealthyApp.Models.Requests;
 using HealthyApp.Models.Responses;
 using HealthyApp.Services.Interfaces;
+using System.Web.Http;
 
 namespace HealthyApp.Services
 {
-    public class HealthyUserService : IHealthyUserService
+	public class HealthyUserService : IHealthyUserService
     {
-
         private readonly HttpClient _client;
-        public HealthyUserService(HttpClient client)
-        {
-            _client = client;
-        }
+		private readonly ILogger<HealthyUserService> _logger;
 
+		public HealthyUserService(HttpClient client, ILogger<HealthyUserService> logger)
+		{
+			_client = client;
+			_logger = logger;
+		}
 
-        public async Task<HealthyUseResponse> Create(HealthyUserRequest request)
+		public async Task<HealthyUseResponse> Create(HealthyUserRequest request)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace HealthyApp.Services
             }
             catch (Exception ex)
             {
-
+				_logger.LogError(ex.Message);
                 throw ex;
             }
         }
