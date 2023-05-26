@@ -2,7 +2,7 @@
 
 namespace HealthyApp.Domain.Interfaces
 {
-    public interface ILevelRepository : IGenericRepository<Level>
+    public interface IRewardRepository : IGenericRepository<Reward>
     {
     }
 }
