@@ -30,6 +30,7 @@ namespace HealthyApp.Domain.Models
 			Goals = new List<Goal>();
 		}
 
+
 		public bool ShouldLevelBeUpdated()
 		{
 			if (Goals != null)

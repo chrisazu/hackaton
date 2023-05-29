@@ -21,7 +21,7 @@ namespace HealthyApp.Infra.Repository
 
 		public async Task<Goal> GetByIdWithUserProgress(int id, CancellationToken cancellationToken)
 		{
-			return await _dbSet.Where(q => q.Id == id).Include("User").Include("Progresses").Include("DietProgresses").FirstOrDefaultAsync();
+			return await _dbSet.Where(q => q.Id == id).Include("User").Include("Progresses").FirstOrDefaultAsync();
 		}
 	}
 }

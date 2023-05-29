@@ -2,9 +2,9 @@
 
 namespace HealthyApp.Domain.Models
 {
-    public class DietProgress : Progress
+    public class ExerciseProgress : Progress
     {
         [Required]
-        public int KilogramsLost { get; set; }
+        public TimeSpan DurationInMinutes { get; set; }
     }
 }

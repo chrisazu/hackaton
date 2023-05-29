@@ -4,6 +4,7 @@ using HealthyApp.Infra;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthyApp.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230529202450_FinalModelAbs")]
+    partial class FinalModelAbs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,6 +41,10 @@ namespace HealthyApp.Infra.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -58,7 +65,9 @@ namespace HealthyApp.Infra.Migrations
 
                     b.ToTable("Goals");
 
-                    b.UseTptMappingStrategy();
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Goal");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("HealthyApp.Domain.Models.Level", b =>
@@ -168,11 +177,17 @@ namespace HealthyApp.Infra.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Progresses");
 
-                    b.UseTptMappingStrategy();
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Progress");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("HealthyApp.Domain.Models.Reward", b =>
@@ -443,10 +458,10 @@ namespace HealthyApp.Infra.Migrations
                     b.Property<int>("Kilograms")
                         .HasColumnType("int");
 
-                    b.ToTable("DietGoals", (string)null);
+                    b.HasDiscriminator().HasValue("DietGoal");
                 });
 
-            modelBuilder.Entity("HealthyApp.Domain.Models.ExerciseGoal", b =>
+            modelBuilder.Entity("HealthyApp.Domain.Models.ExercisesGoal", b =>
                 {
                     b.HasBaseType("HealthyApp.Domain.Models.Goal");
 
@@ -459,7 +474,7 @@ namespace HealthyApp.Infra.Migrations
                     b.Property<int>("TimesPerFrequency")
                         .HasColumnType("int");
 
-                    b.ToTable("ExercisesGoals", (string)null);
+                    b.HasDiscriminator().HasValue("ExercisesGoal");
                 });
 
             modelBuilder.Entity("HealthyApp.Domain.Models.DietProgress", b =>
@@ -474,22 +489,22 @@ namespace HealthyApp.Infra.Migrations
 
                     b.HasIndex("DietGoalId");
 
-                    b.ToTable("DietProgresses", (string)null);
+                    b.HasDiscriminator().HasValue("DietProgress");
                 });
 
-            modelBuilder.Entity("HealthyApp.Domain.Models.ExerciseProgress", b =>
+            modelBuilder.Entity("HealthyApp.Domain.Models.ExercisesProgress", b =>
                 {
                     b.HasBaseType("HealthyApp.Domain.Models.Progress");
 
                     b.Property<TimeSpan>("DurationInMinutes")
                         .HasColumnType("time");
 
-                    b.Property<int?>("ExerciseGoalId")
+                    b.Property<int?>("ExercisesGoalId")
                         .HasColumnType("int");
 
-                    b.HasIndex("ExerciseGoalId");
+                    b.HasIndex("ExercisesGoalId");
 
-                    b.ToTable("ExerciseProgresses", (string)null);
+                    b.HasDiscriminator().HasValue("ExercisesProgress");
                 });
 
             modelBuilder.Entity("HealthyApp.Domain.Models.Goal", b =>
@@ -572,48 +587,18 @@ namespace HealthyApp.Infra.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("HealthyApp.Domain.Models.DietGoal", b =>
-                {
-                    b.HasOne("HealthyApp.Domain.Models.Goal", null)
-                        .WithOne()
-                        .HasForeignKey("HealthyApp.Domain.Models.DietGoal", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("HealthyApp.Domain.Models.ExerciseGoal", b =>
-                {
-                    b.HasOne("HealthyApp.Domain.Models.Goal", null)
-                        .WithOne()
-                        .HasForeignKey("HealthyApp.Domain.Models.ExerciseGoal", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("HealthyApp.Domain.Models.DietProgress", b =>
                 {
                     b.HasOne("HealthyApp.Domain.Models.DietGoal", null)
                         .WithMany("Progresses")
                         .HasForeignKey("DietGoalId");
-
-                    b.HasOne("HealthyApp.Domain.Models.Progress", null)
-                        .WithOne()
-                        .HasForeignKey("HealthyApp.Domain.Models.DietProgress", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
-            modelBuilder.Entity("HealthyApp.Domain.Models.ExerciseProgress", b =>
+            modelBuilder.Entity("HealthyApp.Domain.Models.ExercisesProgress", b =>
                 {
-                    b.HasOne("HealthyApp.Domain.Models.ExerciseGoal", null)
+                    b.HasOne("HealthyApp.Domain.Models.ExercisesGoal", null)
                         .WithMany("Progresses")
-                        .HasForeignKey("ExerciseGoalId");
-
-                    b.HasOne("HealthyApp.Domain.Models.Progress", null)
-                        .WithOne()
-                        .HasForeignKey("HealthyApp.Domain.Models.ExerciseProgress", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ExercisesGoalId");
                 });
 
             modelBuilder.Entity("HealthyApp.Domain.Models.Level", b =>
@@ -631,7 +616,7 @@ namespace HealthyApp.Infra.Migrations
                     b.Navigation("Progresses");
                 });
 
-            modelBuilder.Entity("HealthyApp.Domain.Models.ExerciseGoal", b =>
+            modelBuilder.Entity("HealthyApp.Domain.Models.ExercisesGoal", b =>
                 {
                     b.Navigation("Progresses");
                 });

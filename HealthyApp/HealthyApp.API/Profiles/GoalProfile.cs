@@ -13,12 +13,18 @@ namespace HealthyApp.API.Profiles
         {
             CreateMap<GoalRequest, CreateGoalCommand>()
                 .ForMember(m => m.Frequency, dest => dest.MapFrom(src => Enum.GetName(typeof(GoalFrequency), src.Frequency)))
-                .ForMember(m => m.Type, dest => dest.MapFrom(src => Enum.GetName(typeof(GoalType), src.Type)))
+                .ForMember(m => m.Type, dest => dest.MapFrom(src => src.Type))
                 .ForMember(m => m.Kilograms, dest => dest.MapFrom(src => src.Kilograms))
                 .ForMember(m => m.Duration, dest => dest.MapFrom(src => TimeSpan.FromMinutes(src.DurationInMinutes)));
 
             CreateMap<CreateGoalCommand, Goal>()
-                .ForMember(m => m.Type, dest => dest.MapFrom(src => (GoalType)Enum.Parse(typeof(GoalType), src.Type)));
+                .Include<CreateGoalCommand, DietGoal>()
+                .Include<CreateGoalCommand, ExerciseGoal>()
+                .ForMember(m => m.Type, dest => dest.MapFrom(src => src.Type));
+
+            CreateMap<CreateGoalCommand, ExerciseGoal>();
+            
+            CreateMap<CreateGoalCommand, DietGoal>();
         }
     }
 }

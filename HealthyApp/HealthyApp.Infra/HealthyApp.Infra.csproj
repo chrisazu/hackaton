@@ -7,6 +7,40 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20230524214335_IdentityUser.cs" />
+    <Compile Remove="Migrations\20230524214335_IdentityUser.Designer.cs" />
+    <Compile Remove="Migrations\20230525014535_HealthyUserGoalReward.cs" />
+    <Compile Remove="Migrations\20230525014535_HealthyUserGoalReward.Designer.cs" />
+    <Compile Remove="Migrations\20230525014812_HealthyUsers.cs" />
+    <Compile Remove="Migrations\20230525014812_HealthyUsers.Designer.cs" />
+    <Compile Remove="Migrations\20230525165651_NewEntities.cs" />
+    <Compile Remove="Migrations\20230525165651_NewEntities.Designer.cs" />
+    <Compile Remove="Migrations\20230525171204_GoalProgressesRenamed.cs" />
+    <Compile Remove="Migrations\20230525171204_GoalProgressesRenamed.Designer.cs" />
+    <Compile Remove="Migrations\20230525210422_AddAspnetId.cs" />
+    <Compile Remove="Migrations\20230525210422_AddAspnetId.Designer.cs" />
+    <Compile Remove="Migrations\20230526141515_InsertLevelData.cs" />
+    <Compile Remove="Migrations\20230526141515_InsertLevelData.Designer.cs" />
+    <Compile Remove="Migrations\20230529161130_KilogramsAdded.cs" />
+    <Compile Remove="Migrations\20230529161130_KilogramsAdded.Designer.cs" />
+    <Compile Remove="Migrations\20230529174028_CreatedDateAdded.cs" />
+    <Compile Remove="Migrations\20230529174028_CreatedDateAdded.Designer.cs" />
+    <Compile Remove="Migrations\20230529191609_DietProgress.cs" />
+    <Compile Remove="Migrations\20230529191609_DietProgress.Designer.cs" />
+    <Compile Remove="Migrations\20230529194352_DietGoalExercisesGoal.cs" />
+    <Compile Remove="Migrations\20230529194352_DietGoalExercisesGoal.Designer.cs" />
+    <Compile Remove="Migrations\20230529194720_Goal.cs" />
+    <Compile Remove="Migrations\20230529194720_Goal.Designer.cs" />
+    <Compile Remove="Migrations\20230529195756_SeparatedGoal.cs" />
+    <Compile Remove="Migrations\20230529195756_SeparatedGoal.Designer.cs" />
+    <Compile Remove="Migrations\20230529202019_FinalModel.cs" />
+    <Compile Remove="Migrations\20230529202019_FinalModel.Designer.cs" />
+    <Compile Remove="Migrations\20230529202450_FinalModelAbs.cs" />
+    <Compile Remove="Migrations\20230529202450_FinalModelAbs.Designer.cs" />
+    <Compile Remove="Migrations\ApplicationDbContextModelSnapshot.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
 	    <PrivateAssets>all</PrivateAssets>
@@ -21,6 +55,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HealthyApp.Domain\HealthyApp.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

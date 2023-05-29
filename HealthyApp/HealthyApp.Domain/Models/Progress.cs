@@ -2,13 +2,11 @@
 
 namespace HealthyApp.Domain.Models
 {
-    public class Progress
+    public abstract class Progress
     {
         [Required]
         [Key]
-        public int Id { get; set; }
-
-        public TimeSpan Value { get; set; }
+        public int Id { get; set; }        
 
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
     }

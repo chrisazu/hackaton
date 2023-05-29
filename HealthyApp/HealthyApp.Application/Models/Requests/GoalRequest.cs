@@ -1,4 +1,6 @@
-﻿namespace HealthyApp.Application.Models.Requests
+﻿using HealthyApp.Domain.Enums;
+
+namespace HealthyApp.Application.Models.Requests
 {
     public class GoalRequest
     {
@@ -6,7 +8,7 @@
 
         public required string Description { get; set; }
 
-        public required int Type { get; set; }
+        public required GoalType Type { get; set; }
 
         public int Frequency { get; set; }
 

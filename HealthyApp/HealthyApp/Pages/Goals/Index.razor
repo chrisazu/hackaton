@@ -33,6 +33,7 @@ else
                 <th>Kilogramos</th>
                 <th>Tipo</th>
                 <th>Fecha de creación</th>
+                <th>Estado</th>
                 <th></th>
             </tr>
         </thead>
@@ -68,6 +69,7 @@ else
                     </td>
                     <td>@goal.Type </td>
                     <td>@goal.CreatedDate.ToShortDateString()</td>
+                    <td>@goal.Status</td>
                     <td><a href="@string.Format("goals/add-progress/{0}",goal.Id)">Agregar progreso</a></td>
                 </tr>
             }
@@ -91,7 +93,7 @@ else
     {
         var userId = int.Parse(httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "userId")?.Value);
 
-        var requ = new Models.Requests.GoalRequest() { UserId = userId };
-        goals = await _goalService.GetByUserId(requ);
+        var request = new Models.Requests.GoalRequest() { UserId = userId };
+        goals = await _goalService.GetByUserId(request);
     }
 }

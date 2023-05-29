@@ -34,7 +34,24 @@ namespace HealthyApp.Application.Services.GoalProgress.Commands
 
             if (user == null) { throw new ArgumentNullException("User not found"); }
 
-            var progress = _mapper.Map<Progress>(request);
+            Progress progress; // _mapper.Map<Progress>(request);
+
+            if (goal is DietGoal)
+            {
+                progress = _mapper.Map<DietProgress>(request);
+
+                //var dietGoal = (DietGoal)goal;
+
+                //dietGoal.AddDietProgress(progress);
+            }
+            else
+            {
+                progress = _mapper.Map<ExerciseProgress>(request);
+
+                //var execirseGoal = (ExerciseGoal)goal;
+
+                //execirseGoal.AddExerciseProgress(progress);
+            }
 
             goal.AddProgress(progress);
 
