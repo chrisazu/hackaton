@@ -1,8 +1,8 @@
-﻿using HealthyApp.Models.Requests;
-using System.Web.Http;
+﻿using System.Web.Http;
 
-using HealthyApp.Services.Interfaces;
+using HealthyApp.Models.Requests;
 using HealthyApp.Models.Responses;
+using HealthyApp.Services.Interfaces;
 
 namespace HealthyApp.Services
 {

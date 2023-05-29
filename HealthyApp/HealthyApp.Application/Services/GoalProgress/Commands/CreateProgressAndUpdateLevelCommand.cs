@@ -5,8 +5,8 @@ namespace HealthyApp.Application.Services.GoalProgress.Commands
 {
     public class CreateProgressAndUpdateLevelCommand : IRequest<ProgressResponse>
     {
-		public required int GoalId { get; set; }
+		public int GoalId { get; set; }
 
-		public required TimeSpan Value { get; set; }
+		public int Value { get; set; }
     }
 }

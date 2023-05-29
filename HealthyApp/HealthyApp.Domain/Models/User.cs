@@ -23,10 +23,13 @@ namespace HealthyApp.Domain.Models
 		[Required]
 		public required Level Level { get; set; }
 
-		public User()
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+
+        public User()
 		{
 			Goals = new List<Goal>();
 		}
+
 
 		public bool ShouldLevelBeUpdated()
 		{

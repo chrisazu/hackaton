@@ -1,22 +1,30 @@
 ﻿using AutoMapper;
 
 using HealthyApp.Application.Models.Requests;
-using HealthyApp.Domain.Models;
-using HealthyApp.Application.Services.GoalProgress.Commands;
 using HealthyApp.Application.Models.Response;
+using HealthyApp.Application.Services.GoalProgress.Commands;
+using HealthyApp.Domain.Models;
 
 namespace HealthyApp.API.Profiles
 {
-	public class ProgressProfile : Profile
-	{
+    public class ProgressProfile : Profile
+    {
         public ProgressProfile()
         {
-			CreateMap<ProgressRequest, CreateProgressAndUpdateLevelCommand>()				
-				.ForMember(m => m.Value, dest => dest.MapFrom(src => TimeSpan.FromMinutes(src.DurationInMinutes)));
+            CreateMap<ProgressRequest, CreateProgressAndUpdateLevelCommand>()
+                .ForMember(m => m.Value, dest => dest.MapFrom(src => TimeSpan.FromMinutes(src.Value)));
 
-			CreateMap<CreateProgressAndUpdateLevelCommand, Progress> ();
+            CreateMap<CreateProgressAndUpdateLevelCommand, Progress>()
+                .Include<CreateProgressAndUpdateLevelCommand, DietProgress>()
+                .Include<CreateProgressAndUpdateLevelCommand, ExerciseProgress>();
 
-			CreateMap<Progress, ProgressResponse>();
-		}
+            CreateMap<Progress, ProgressResponse>();
+
+            CreateMap<CreateProgressAndUpdateLevelCommand, DietProgress>()
+                .ForMember(m => m.KilogramsLost, dest => dest.MapFrom(src => src.Value));
+
+            CreateMap<CreateProgressAndUpdateLevelCommand, ExerciseProgress>()
+                .ForMember(m => m.DurationInMinutes, dest => dest.MapFrom(src => TimeSpan.FromMinutes(src.Value)));
+        }
     }
 }

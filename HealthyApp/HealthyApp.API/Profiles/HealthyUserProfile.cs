@@ -19,9 +19,11 @@ namespace HealthyApp.API.Profiles
             
             CreateMap<Goal, GoalResponse>();
 
+            CreateMap<ExerciseGoal, GoalResponse>();
+
+            CreateMap<DietGoal, GoalResponse>();
+
             CreateMap<Reward, RewardResponse>();
-
         }
-
     }
 }

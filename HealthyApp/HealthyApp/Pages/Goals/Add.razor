@@ -6,11 +6,12 @@
 @using System.ComponentModel;
 @using HealthyApp.Services.Interfaces;
 @using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Http
+
 @inject SignInManager<IdentityUser> _signInManager
 @inject IHealthyUserService _healthyUserService
 @inject NavigationManager NavigationManager
 @inject IGoalService _goalService
-@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor httpContextAccessor
 
 <h2><span class="oi oi-plus" aria-hidden="true"></span> Agregar objetivo</h2>
@@ -21,7 +22,7 @@
         <label for="Type" class="form-label">Tipo</label>
         <div class="col-md-2">
             <InputSelect id="Type" class="form-select" @bind-Value="model.Type">
-                <option value="1">Ejercicio</option>
+                <option selected value="1">Ejercicio</option>
                 <option value="2">Bajar de peso</option>
                 <option value="3">Meditación</option>
             </InputSelect>
@@ -29,7 +30,6 @@
     </div>
     <div class="mb-3">
         <label for="Name" class="form-label">Nombre</label>
-        @*<Label For="@(() => model.Name))" />*@
         <div class="col-md-2">
             <InputText id="Name" class="form-control" @bind-Value="model.Name" />
         </div>
@@ -43,7 +43,7 @@
         <ValidationMessage For="@(() => model.Description)" />
     </div>
 
-    @if (model.Type == "2")
+    @if (model.Type == 2)
     {
         <div class="mb-3">
             <label for="Kilograms" class="form-label">Kilos</label>
@@ -106,19 +106,9 @@
 
     private AddGoalRequest model = new();
 
-    private string GetA(TimeSpan a)
-    {
-        return new DateTime(a.Ticks).ToString();
-    }
-
     protected async Task HandleSubmit()
     {        
         model.UserId = int.Parse(httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "userId")?.Value);
-
-        if (model.Type == "2")
-        {
-            model.Frequency = "1";
-        }
 
         var goalResponse = await _goalService.Create(model);
 

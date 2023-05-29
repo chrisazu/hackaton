@@ -25,7 +25,16 @@ namespace HealthyApp.Application.Services.Goals.Commands
 
             if (user == null) { throw new ArgumentNullException("User not found"); }
 
-            var goal = _mapper.Map<Goal>(request);
+            Goal goal;
+
+            if (request.Type == Domain.Enums.GoalType.Diet)
+            {
+                goal = _mapper.Map<DietGoal>(request);
+            }
+            else
+            {
+                goal = _mapper.Map<ExerciseGoal>(request);
+            }
 
             user.Goals.Add(goal);
 

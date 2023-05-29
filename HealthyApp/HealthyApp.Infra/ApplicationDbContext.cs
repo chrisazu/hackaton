@@ -17,15 +17,23 @@ namespace HealthyApp.Infra
 
 		public DbSet<User> HealthyUsers { get; set; }
 
-		public DbSet<Goal> Goals { get; set; }
+        public DbSet<Reward> Rewards { get; set; }
 
-		public DbSet<Reward> Rewards { get; set; }
+        public DbSet<Level> Levels { get; set; }
 
-		public DbSet<Level> Levels { get; set; }
+        public DbSet<Goal> Goals { get; set; }
 
-		public DbSet<Progress> Progresses { get; set; }
+        public DbSet<ExerciseGoal> ExerciseGoals { get; set; }
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public DbSet<DietGoal> DietGoals { get; set; }
+
+        public DbSet<Progress> Progresses { get; set; }
+
+        public DbSet<ExerciseProgress> ExerciseProgresses { get; set; }
+
+        public DbSet<DietProgress> DietProgresses { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			if (!optionsBuilder.IsConfigured)
 			{
@@ -37,7 +45,15 @@ namespace HealthyApp.Infra
 		{
 			base.OnModelCreating(modelBuilder);
 
-			modelBuilder.Entity<Level>().HasData(
+            modelBuilder.Entity<DietGoal>().ToTable("DietGoals");
+
+            modelBuilder.Entity<ExerciseGoal>().ToTable("ExercisesGoals");
+
+            modelBuilder.Entity<DietProgress>().ToTable("DietProgresses");
+
+            modelBuilder.Entity<ExerciseProgress>().ToTable("ExerciseProgresses");
+
+            modelBuilder.Entity<Level>().HasData(
 				new Level() { Id = 1, Name = "Beginner", Description = "Estoy como Leonardo DiCaprio" },
 				new Level() { Id = 2, Name = "Intermediate", Number = 2, Description = "Estoy como Emma Stone" },
 				new Level() { Id = 3, Name = "Upper Intermediate", Number = 3, Description = "Estoy como Chris Pratt" },
