@@ -19,6 +19,8 @@ namespace HealthyApp.Application.Services.Goals.Commands
 
         public TimeSpan Duration { get; set; } = default;
 
+        public int Kilograms { get; set; } = 0;
+
         public int UserId { get; set; }
     }
 }

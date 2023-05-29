@@ -29,7 +29,9 @@ namespace HealthyApp.Domain.Models
 
 		public int TimesPerFrequency { get; set; } = 0;
 
-		public TimeSpan Duration { get; set; } = default;
+        public int Kilograms { get; set; }
+
+        public TimeSpan Duration { get; set; } = default;
 
 		public virtual User User { get; set; }
 

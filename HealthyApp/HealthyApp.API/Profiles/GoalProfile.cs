@@ -14,6 +14,7 @@ namespace HealthyApp.API.Profiles
             CreateMap<GoalRequest, CreateGoalCommand>()
                 .ForMember(m => m.Frequency, dest => dest.MapFrom(src => (GoalFrequency)Enum.Parse(typeof(GoalFrequency), src.Frequency)))
                 .ForMember(m => m.Type, dest => dest.MapFrom(src => (GoalType)Enum.Parse(typeof(GoalType), src.Type)))
+                .ForMember(m => m.Kilograms, dest => dest.MapFrom(src => src.Kilograms))
                 .ForMember(m => m.Duration, dest => dest.MapFrom(src => TimeSpan.FromMinutes(src.DurationInMinutes)));
 
             CreateMap<CreateGoalCommand, Goal>()

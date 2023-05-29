@@ -16,6 +16,8 @@
 
 		public int TimesPerFrequency { get; set; }
 
-		public TimeSpan Duration { get; set; }
+        public int Kilograms { get; set; }
+
+        public TimeSpan Duration { get; set; }
 	}
 }

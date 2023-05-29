@@ -22,5 +22,7 @@ namespace HealthyApp.Application.Models.Requests
         public int TimesPerFrequency { get; set; } = 0;
 
         public int DurationInMinutes { get; set; } = default;
+
+        public int Kilograms { get; set; }
     }
 }

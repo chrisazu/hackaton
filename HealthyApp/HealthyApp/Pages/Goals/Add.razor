@@ -66,7 +66,7 @@
             <label for="Frequency" class="form-label">Frecuencia</label>
             <div class="col-md-2">
                 <InputSelect id="Frequency" class="form-select" @bind-Value="model.Frequency">
-                    <option value="1">Diario</option>
+                    <option selected value="1">Diario</option>
                     <option value="2">Semanal</option>
                     <option value="3">Mensual</option>
                     <option value="4">Anual</option>
@@ -106,8 +106,6 @@
 
     private AddGoalRequest model = new();
 
-    private AuthenticationState authenticationState;
-
     private string GetA(TimeSpan a)
     {
         return new DateTime(a.Ticks).ToString();
@@ -116,6 +114,11 @@
     protected async Task HandleSubmit()
     {        
         model.UserId = int.Parse(httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "userId")?.Value);
+
+        if (model.Type == "2")
+        {
+            model.Frequency = "1";
+        }
 
         var goalResponse = await _goalService.Create(model);
 

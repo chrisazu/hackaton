@@ -4,6 +4,8 @@ using HealthyApp.Models.Requests;
 using HealthyApp.Models.Responses;
 using HealthyApp.Services.Interfaces;
 
+using NuGet.Protocol;
+
 namespace HealthyApp.Services
 {
     public class GoalService : IGoalService
@@ -81,6 +83,8 @@ namespace HealthyApp.Services
         {
             try
             {
+                var asd = request.ToJson();
+
                 HttpResponseMessage response = await _client.PostAsJsonAsync($"user/{request.UserId}/goals", request);
 
                 if (response.IsSuccessStatusCode)

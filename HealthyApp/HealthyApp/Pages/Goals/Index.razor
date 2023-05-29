@@ -31,21 +31,44 @@ else
                 <th>Duración</th>
                 <th>Frequencia</th>
                 <th>Tiempo de frequencia</th>
+                <th>Kilogramos</th>
                 <th>Tipo</th>
-                
                 <th></th>
             </tr>
-        </thead>    
+        </thead>
         <tbody>
             @foreach (var goal in goals)
             {
                 <tr>
                     <td>@goal.Name </td>
                     <td>@goal.Description </td>
-                    <td>@goal.Duration horas </td>
-                    <td>@goal.Frequency </td>
-                    <td>@goal.TimesPerFrequency veces</td>
-                    <td>@goal.Type </td>                    
+                    @*<td>@(isDiet!) ? @goal.Duration horas : @string.Empty </td>*@
+
+                    <td>
+                        @if (goal.Type != "Diet")
+                        {
+                            @string.Format("{0} horas",goal.Duration)
+                        }
+                    </td>
+                    <td>
+                        @if (goal.Type != "Diet")
+                        {
+                            @string.Format("{0}",goal.Frequency)
+                        }
+                    </td>
+                    <td>
+                        @if (goal.Type != "Diet")
+                        {
+                            @string.Format("{0} veces",goal.TimesPerFrequency)
+                        }
+                    </td>
+                    <td>
+                        @if (goal.Type == "Diet")
+                        {
+                            @string.Format("{0}",goal.Kilograms)
+                        }
+                    </td>
+                    <td>@goal.Type </td>
                     <td><a href="@string.Format("goals/add-progress/{0}",goal.Id)">Agregar progreso</a></td>
                 </tr>
             }
@@ -64,6 +87,8 @@ else
 @code {
 
     private GoalResponse[] goals;
+
+    private bool isDiet;
 
     protected async override Task OnInitializedAsync()
     {
