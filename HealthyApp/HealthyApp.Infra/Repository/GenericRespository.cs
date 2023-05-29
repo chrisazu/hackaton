@@ -28,7 +28,7 @@ namespace HealthyApp.Infra.Repository
 
         public async Task<T> Update(T entity, CancellationToken cancellationToken)
         {
-            _dbSet.Update(entity);
+            _dbSet.Attach(entity);
 			await _dbContext.SaveChangesAsync();
             return entity;
         }

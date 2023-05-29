@@ -28,7 +28,7 @@ namespace HealthyApp.Application.Services.HealthyUser.Queries
             }
             else
             {
-                user = await _healthyUserRepository.GetByAspNeyUserId(request.AspNetUserId, cancellationToken);
+                user = await _healthyUserRepository.GetByAspNetUserIdWithLevel(request.AspNetUserId, cancellationToken);
             }
 
             return _mapper.Map<HealthyUserResponse>(user);

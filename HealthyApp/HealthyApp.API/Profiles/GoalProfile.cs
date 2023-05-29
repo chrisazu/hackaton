@@ -16,7 +16,8 @@ namespace HealthyApp.API.Profiles
                 .ForMember(m => m.Type, dest => dest.MapFrom(src => (GoalType)Enum.Parse(typeof(GoalType), src.Type)))
                 .ForMember(m => m.Duration, dest => dest.MapFrom(src => TimeSpan.FromMinutes(src.DurationInMinutes)));
 
-            CreateMap<CreateGoalCommand, Goal>();
+            CreateMap<CreateGoalCommand, Goal>()
+                .ForMember(m => m.Type, dest => dest.MapFrom(src => (GoalType)Enum.Parse(typeof(GoalType), src.Type)));
         }
     }
 }

@@ -8,5 +8,7 @@ namespace HealthyApp.Services.Interfaces
         Task<GoalResponse[]> GetByUserId(GoalRequest request);
 
         Task<GoalResponse> GetById(GoalRequest request);
+
+        Task<GoalResponse> Create(AddGoalRequest request);
     }
 }

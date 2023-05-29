@@ -1,66 +1,112 @@
 ﻿@page "/goals/add"
 
 @using HealthyApp.Models.Requests;
-@inject HttpClient Http
+@using System.Linq.Expressions;
+@using System.Reflection;
+@using System.ComponentModel;
+@using HealthyApp.Services.Interfaces;
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> _signInManager
+@inject IHealthyUserService _healthyUserService
 @inject NavigationManager NavigationManager
+@inject IGoalService _goalService
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
 
-<h2>Agregar objetivo</h2>
+<h2><span class="oi oi-plus" aria-hidden="true"></span> Agregar objetivo</h2>
 <hr />
 <EditForm Model="model" OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
     <div class="mb-3">
+        <label for="Type" class="form-label">Tipo</label>
+        <div class="col-md-2">
+            <InputSelect id="Type" class="form-select" @bind-Value="model.Type">
+                <option value="1">Ejercicio</option>
+                <option value="2">Bajar de peso</option>
+                <option value="3">Meditación</option>
+            </InputSelect>
+        </div>
+    </div>
+    <div class="mb-3">
         <label for="Name" class="form-label">Nombre</label>
-        <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="model.Name" />
+        @*<Label For="@(() => model.Name))" />*@
+        <div class="col-md-2">
+            <InputText id="Name" class="form-control" @bind-Value="model.Name" />
         </div>
         <ValidationMessage For="@(() => model.Name)" />
     </div>
     <div class="mb-3">
         <label for="Description" class="form-label">Descripción</label>
-        <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="model.Description" />
+        <div class="col-md-2">
+            <InputTextArea id="Description" class="form-control" @bind-Value="model.Description" />
         </div>
         <ValidationMessage For="@(() => model.Description)" />
     </div>
-    <div class="mb-3">
-        <label for="Duration" class="form-label">Duración</label>
-        <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="duration" />
+
+    @if (model.Type == "2")
+    {
+        <div class="mb-3">
+            <label for="Kilograms" class="form-label">Kilos</label>
+            <div class="col-md-2">
+                <InputNumber id="Kilograms" class="form-control" @bind-Value="model.Kilograms" />
+            </div>
+            <ValidationMessage For="@(() => model.Kilograms)" />
         </div>
-        <ValidationMessage For="@(() => model.Duration)" />
-    </div>
-    <div class="mb-3">
-        <label for="Frequency" class="form-label">Frecuencia</label>
-        <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="model.Frequency" />
+    }
+    else
+    {
+        <div class="mb-3">
+            <label for="DurationInMinutes" class="form-label">Duración (en minutos)</label>
+            <div class="col-md-2">
+                <InputNumber id="DurationInMinutes" class="form-control" @bind-Value="model.DurationInMinutes" />
+            </div>
+            <ValidationMessage For="@(() => model.DurationInMinutes)" />
         </div>
-        <ValidationMessage For="@(() => model.Frequency)" />
-    </div>
-    <div class="mb-3">
-        <label for="TimesPerFrequency" class="form-label">Tiempo de frecuencia</label>
-        <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="timesPerFrequency" />
+        <div class="mb-3">
+            <label for="Frequency" class="form-label">Frecuencia</label>
+            <div class="col-md-2">
+                <InputSelect id="Frequency" class="form-select" @bind-Value="model.Frequency">
+                    <option value="1">Diario</option>
+                    <option value="2">Semanal</option>
+                    <option value="3">Mensual</option>
+                    <option value="4">Anual</option>
+                </InputSelect>
+            </div>
         </div>
-        <ValidationMessage For="@(() => model.TimesPerFrequency)" />
-    </div>
+        <div class="mb-3">
+            <label for="TimesPerFrequency" class="form-label">Tiempo de frecuencia</label>
+            <div class="col-md-2">
+                <InputNumber id="TimesPerFrequency" class="form-control" @bind-Value="model.TimesPerFrequency" />
+            </div>
+            <ValidationMessage For="@(() => model.TimesPerFrequency)" />
+        </div>
+    }
+
+    <br />
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <button class="btn btn-light" @onclick="Cancel">Cancelar</button>
+        <button type="button" class="btn btn-light" @onclick="Cancel">Cancelar</button>
     </div>
 </EditForm>
 
 @code {
 
-    private AddGoal model = new();
+    [Parameter] public Expression<Func<string>> For { get; set; }
 
-    string duration = "";
-    string timesPerFrequency = "";
+    private string label => GetDisplayName();
 
-    protected async override Task OnInitializedAsync()
+    private string confirmationMessage = "";
+
+    private string GetDisplayName()
     {
-        duration = new DateTime(model.Duration.Ticks).ToString("HH:mm");
-        timesPerFrequency = model.TimesPerFrequency.ToString();
+        var expression = (MemberExpression)For.Body;
+        var value = expression.Member.GetCustomAttribute(typeof(DisplayNameAttribute)) as DisplayNameAttribute;
+        return value?.DisplayName ?? expression.Member.Name ?? "";
     }
+
+    private AddGoalRequest model = new();
+
+    private AuthenticationState authenticationState;
 
     private string GetA(TimeSpan a)
     {
@@ -68,18 +114,19 @@
     }
 
     protected async Task HandleSubmit()
-    {
-        
-        Cancel();
+    {        
+        model.UserId = int.Parse(httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "userId")?.Value);
+
+        var goalResponse = await _goalService.Create(model);
+
+        if (goalResponse.Id != 0)
+        {
+            Cancel();
+        }
     }
 
     public void Cancel()
     {
-        NavigationManager.NavigateTo("/goals");
+        NavigationManager.NavigateTo("/goals/index");
     }
-}
-
-
-@code {
-
 }

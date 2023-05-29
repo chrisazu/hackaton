@@ -28,16 +28,17 @@ namespace HealthyApp.Domain.Models
 			Goals = new List<Goal>();
 		}
 
-		public void UpdateLevel()
+		public bool ShouldLevelBeUpdated()
 		{
 			if (Goals != null)
 			{
 				if (Goals.All(a => a.Status == Enums.GoalStatus.Accomplished))
 				{
-					Level = new Level() { Id = Level.Id + 1 };
+					return true;
 				}
-				//Level.id ++
 			}
+
+			return false;
 		}
 	}
 }

@@ -8,11 +8,14 @@
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Forms
 @using System.Net.Http.Json;
+@using Microsoft.AspNetCore.Http
 
 @inject IGoalService _goalService
 @inject SignInManager<IdentityUser> _signInManager
 @inject IHealthyUserService _healthyUserService
 @inject IGoalProgressService _goalProgressService
+@inject NavigationManager NavigationManager
+@inject IHttpContextAccessor httpContextAccessor
 
 <PageTitle>@title</PageTitle>
 
@@ -21,27 +24,25 @@
 <h2>Ingresar progreso</h2>
 
 <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
-    <div class="row">
-        <div class="col-1">
-            <label>
-                Tiempo:
-            </label>
-        </div>
-        <div class="col-2">
-            <InputNumber class="form-control col-sm-2 col-form-label" @bind-Value="model.DurationInMinutes" />
-        </div>
-        <div class="col-2">
+    <DataAnnotationsValidator />
+    <div class="mb-3">        
+        <label for="DurationInMinutes" class="form-label">Tiempo</label>
+        <div class="col-md-2">
+            <InputNumber id="DurationInMinutes" class="form-control" @bind-Value="model.DurationInMinutes" />
+        </div>        
+        <ValidationMessage For="@(() => model.DurationInMinutes)" />
+    </div>
+    <div class="mb-3">
+        <div class="col-md-2">
             <InputSelect id="timeType" class="form-select" @bind-Value="model.TimeType">
                 <option value="1">Horas</option>
                 <option value="2">Minutos</option>
             </InputSelect>
         </div>
-        <div class="col-2">
-            <button type="submit" class="btn btn-primary">Cargar</button>
-        </div>
     </div>
-    <div class="row">
-        @confirmationMessage
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Cargar</button>
+        <button type="button" class="btn btn-light" @onclick="Cancel">Cancelar</button>
     </div>
 </EditForm>
 
@@ -50,8 +51,6 @@
     private GoalResponse goal;
 
     string title => $"Objetivo: {goal?.Name}";
-
-    string confirmationMessage;
 
     private HealthyApp.Models.Requests.AddProgress model = new();
 
@@ -62,11 +61,9 @@
 
     protected async override Task OnInitializedAsync()
     {
-        var request = new HealthyUserRequest();
-        request.AspNetUserId = _signInManager.UserManager.Users.First().Id;
-        var response = await _healthyUserService.Get(request);
+        var userId = int.Parse(httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "userId")?.Value);
 
-        var goalRequest = new Models.Requests.GoalRequest() { UserId = response.Id, Id = goalId };
+        var goalRequest = new Models.Requests.GoalRequest() { UserId = userId, Id = goalId };
         goal = await _goalService.GetById(goalRequest);
     }
 
@@ -79,7 +76,12 @@
 
         if (response.Id != 0)
         {
-            confirmationMessage = "Progreso ingresado correctamente!";
+            Cancel();
         }
+    }
+
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/goals/index");
     }
 }

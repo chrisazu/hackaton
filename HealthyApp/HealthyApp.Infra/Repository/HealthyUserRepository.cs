@@ -14,9 +14,9 @@ namespace HealthyApp.Infra.Repository
 			_dbSet = dbContext.Set<User>();
 		}
 
-        public async Task<User> GetByAspNeyUserId(string aspNetUserId, CancellationToken cancellationToken)
+        public async Task<User> GetByAspNetUserIdWithLevel(string aspNetUserId, CancellationToken cancellationToken)
         {
-            return await _dbSet.FirstOrDefaultAsync(p => p.AspNetUserId == aspNetUserId, cancellationToken);
+            return await _dbSet.Include("Level").FirstOrDefaultAsync(p => p.AspNetUserId == aspNetUserId, cancellationToken);
         }
 
         public async Task<User> GetByIdWithGoalsLevel(int id, CancellationToken cancellationToken)

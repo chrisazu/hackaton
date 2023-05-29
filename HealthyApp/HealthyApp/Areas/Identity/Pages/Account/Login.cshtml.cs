@@ -3,6 +3,7 @@
 #nullable disable
 
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 using AutoMapper;
 
@@ -117,6 +118,15 @@ namespace HealthyApp.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var request = new HealthyUserRequest();
+                    var loggedUser = _signInManager.UserManager.Users.First();
+                    request.AspNetUserId = loggedUser.Id;
+                    
+                    var response = await _healthyUserService.Get(request);    
+                    
+                    await _signInManager.UserManager.AddClaimAsync(loggedUser, new Claim("level", response.Level.Name));
+                    await _signInManager.UserManager.AddClaimAsync(loggedUser, new Claim("userId", response.Id.ToString()));
+
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

@@ -9,6 +9,9 @@
 @inject SignInManager<IdentityUser> _signInManager
 @inject IHealthyUserService _healthyUserService
 @inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
+
 
 <PageTitle>Mis objetivos</PageTitle>
 
@@ -27,10 +30,12 @@ else
                 <th>Descripción</th>
                 <th>Duración</th>
                 <th>Frequencia</th>
+                <th>Tiempo de frequencia</th>
                 <th>Tipo</th>
+                
                 <th></th>
             </tr>
-        </thead>
+        </thead>    
         <tbody>
             @foreach (var goal in goals)
             {
@@ -39,7 +44,8 @@ else
                     <td>@goal.Description </td>
                     <td>@goal.Duration horas </td>
                     <td>@goal.Frequency </td>
-                    <td>@goal.Type </td>
+                    <td>@goal.TimesPerFrequency veces</td>
+                    <td>@goal.Type </td>                    
                     <td><a href="@string.Format("goals/add-progress/{0}",goal.Id)">Agregar progreso</a></td>
                 </tr>
             }
@@ -48,6 +54,10 @@ else
 }
 
 <div class="col-2">
+    @if (goals?.Count() == 0)
+    {
+        <p><em>¡Cargá tu primer objetivo!</em></p>
+    }
     <a type="button" class="btn btn-primary" href="@string.Format("goals/add")">Crear objetivo</a>
 </div>
 
@@ -57,11 +67,9 @@ else
 
     protected async override Task OnInitializedAsync()
     {
-        var request = new HealthyUserRequest();
-        request.AspNetUserId = _signInManager.UserManager.Users.First().Id;
-        var response = await _healthyUserService.Get(request);
+        var userId = int.Parse(httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "userId")?.Value);
 
-        var requ = new Models.Requests.GoalRequest() { UserId = response.Id };
+        var requ = new Models.Requests.GoalRequest() { UserId = userId };
         goals = await _goalService.GetByUserId(requ);
     }
 }

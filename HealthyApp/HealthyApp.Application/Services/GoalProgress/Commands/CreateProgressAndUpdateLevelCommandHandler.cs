@@ -6,44 +6,50 @@ using HealthyApp.Domain.Models;
 
 using MediatR;
 
+
 namespace HealthyApp.Application.Services.GoalProgress.Commands
 {
-	public class CreateProgressAndUpdateLevelCommandHandler : IRequestHandler<CreateProgressAndUpdateLevelCommand, ProgressResponse>
+    public class CreateProgressAndUpdateLevelCommandHandler : IRequestHandler<CreateProgressAndUpdateLevelCommand, ProgressResponse>
     {
         private readonly IGoalRepository _goalRepository;
-		private readonly IHealthyUserRepository _healthyUserRepository;
-		private readonly ILevelRepository _levelRepository;
-		private readonly IMapper _mapper;
+        private readonly IHealthyUserRepository _healthyUserRepository;
+        private readonly ILevelRepository _levelRepository;
+        private readonly IMapper _mapper;
 
-		public CreateProgressAndUpdateLevelCommandHandler(IGoalRepository goalRepository, IMapper mapper, IHealthyUserRepository healthyUserRepository)
-		{
-			_goalRepository = goalRepository;
-			_healthyUserRepository = healthyUserRepository;
-			//_levelRepository = levelRepository;
-			_mapper = mapper;
-		}
+        public CreateProgressAndUpdateLevelCommandHandler(IGoalRepository goalRepository, IMapper mapper, IHealthyUserRepository healthyUserRepository, ILevelRepository levelRepository)
+        {
+            _goalRepository = goalRepository;
+            _healthyUserRepository = healthyUserRepository;
+            _levelRepository = levelRepository;
+            _mapper = mapper;
+        }
 
-		public async Task<ProgressResponse> Handle(CreateProgressAndUpdateLevelCommand request, CancellationToken cancellationToken)
+        public async Task<ProgressResponse> Handle(CreateProgressAndUpdateLevelCommand request, CancellationToken cancellationToken)
         {
             var goal = await _goalRepository.GetByIdWithUserProgress(request.GoalId, cancellationToken);
-			
-			if (goal == null) { throw new ArgumentNullException("Goal not found"); }
 
-			var user = await _healthyUserRepository.GetByIdWithGoalsLevel(goal.User.Id, cancellationToken);
+            if (goal == null) { throw new ArgumentNullException("Goal not found"); }
 
-			if (user == null) { throw new ArgumentNullException("User not found"); }
+            var user = await _healthyUserRepository.GetByIdWithGoalsLevel(goal.User.Id, cancellationToken);
 
-			var progress = _mapper.Map<Progress>(request);
+            if (user == null) { throw new ArgumentNullException("User not found"); }
 
-			goal.AddProgress(progress);
+            var progress = _mapper.Map<Progress>(request);
+
+            goal.AddProgress(progress);
 
             await _goalRepository.Update(goal, cancellationToken);
 
-			user.UpdateLevel();
+            if (user.ShouldLevelBeUpdated())
+            {
+                var nextLevel = await _levelRepository.GetById(user.Level.Id++, cancellationToken);
 
-			//await _healthyUserRepository.Update(user, cancellationToken);
+                user.Level = nextLevel;
 
-			return _mapper.Map<ProgressResponse>(progress);
+                await _healthyUserRepository.Update(user, cancellationToken);
+            }
+
+            return _mapper.Map<ProgressResponse>(progress);
         }
     }
 }

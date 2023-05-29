@@ -76,5 +76,25 @@ namespace HealthyApp.Services
                 throw ex;
             }
         }
+
+        public async Task<GoalResponse> Create(AddGoalRequest request)
+        {
+            try
+            {
+                HttpResponseMessage response = await _client.PostAsJsonAsync($"user/{request.UserId}/goals", request);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<GoalResponse>();
+                }
+
+                throw new HttpResponseException(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                throw ex;
+            }
+        }
     }
 }
