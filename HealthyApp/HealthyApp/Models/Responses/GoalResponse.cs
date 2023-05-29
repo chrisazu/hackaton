@@ -19,5 +19,7 @@
         public int Kilograms { get; set; }
 
         public TimeSpan Duration { get; set; }
+
+		public IEnumerable<GoalProgressResponse> Progress { get; set; }
 	}
 }

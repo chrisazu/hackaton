@@ -24,6 +24,7 @@ builder.Services.AddScoped(sp =>
 builder.Services.AddTransient<IHealthyUserService, HealthyApp.Services.HealthyUserService>();
 builder.Services.AddTransient<IGoalService, HealthyApp.Services.GoalService>();
 builder.Services.AddTransient<IGoalProgressService, HealthyApp.Services.GoalProgressService>();
+builder.Services.AddTransient<IAdvisorService, HealthyApp.Services.AdvisorService>();
 
 builder.Services.AddMapperConfig();
 
