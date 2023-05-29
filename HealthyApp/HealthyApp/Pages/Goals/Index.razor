@@ -1,0 +1,67 @@
+﻿@page "/goals/index"
+@using HealthyApp.Models.Requests;
+@using HealthyApp.Models.Responses;
+@using HealthyApp.Services.Interfaces;
+@using HealthyApp.Services;
+@using Microsoft.AspNetCore.Identity;
+
+@inject IGoalService _goalService
+@inject SignInManager<IdentityUser> _signInManager
+@inject IHealthyUserService _healthyUserService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Mis objetivos</PageTitle>
+
+<h1>Mis objetivos</h1>
+
+@if (goals == null)
+{
+    <p><em>Cargando tus objetivos...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Duración</th>
+                <th>Frequencia</th>
+                <th>Tipo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var goal in goals)
+            {
+                <tr>
+                    <td>@goal.Name </td>
+                    <td>@goal.Description </td>
+                    <td>@goal.Duration horas </td>
+                    <td>@goal.Frequency </td>
+                    <td>@goal.Type </td>
+                    <td><a href="@string.Format("goals/add-progress/{0}",goal.Id)">Agregar progreso</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div class="col-2">
+    <a type="button" class="btn btn-primary" href="@string.Format("goals/add")">Crear objetivo</a>
+</div>
+
+@code {
+
+    private GoalResponse[] goals;
+
+    protected async override Task OnInitializedAsync()
+    {
+        var request = new HealthyUserRequest();
+        request.AspNetUserId = _signInManager.UserManager.Users.First().Id;
+        var response = await _healthyUserService.Get(request);
+
+        var requ = new Models.Requests.GoalRequest() { UserId = response.Id };
+        goals = await _goalService.GetByUserId(requ);
+    }
+}

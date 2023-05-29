@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -22,15 +21,19 @@ builder.Services.AddScoped(sp =>
             BaseAddress = new Uri(builder.Configuration.GetValue<string>("BackendUri"))
         });
 
-
-builder.Services.AddTransient<IHealthyUserService, HealthyUserService>();
-
+builder.Services.AddTransient<IHealthyUserService, HealthyApp.Services.HealthyUserService>();
+builder.Services.AddTransient<IGoalService, HealthyApp.Services.GoalService>();
+builder.Services.AddTransient<IGoalProgressService, HealthyApp.Services.GoalProgressService>();
 
 builder.Services.AddMapperConfig();
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+
+builder.Services.AddHttpClient();
+
+//builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

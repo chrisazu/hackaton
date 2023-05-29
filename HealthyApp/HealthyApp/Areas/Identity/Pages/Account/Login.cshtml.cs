@@ -4,6 +4,11 @@
 
 using System.ComponentModel.DataAnnotations;
 
+using AutoMapper;
+
+using HealthyApp.Models.Requests;
+using HealthyApp.Services.Interfaces;
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +19,16 @@ namespace HealthyApp.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IHealthyUserService _healthyUserService;
+        private readonly IMapper _mapper;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, IHealthyUserService healthyUserService, IMapper mapper, ILogger<LoginModel> logger)
         {
-            _signInManager = signInManager;
-            _logger = logger;
+            _signInManager = signInManager;            
+            _healthyUserService = healthyUserService;
+            _mapper = mapper;
+            _logger = logger;            
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿namespace HealthyApp.Models.Responses
 {
-    public class HealthyUseResponse
+    public class HealthyUserResponse
     {
         public int Id { get; set; }
 

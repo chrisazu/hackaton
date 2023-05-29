@@ -31,7 +31,7 @@ namespace HealthyApp.Domain.Models
 
 		public TimeSpan Duration { get; set; } = default;
 
-		public virtual required User User { get; set; }
+		public virtual User User { get; set; }
 
 		public virtual List<Progress> Progresses { get; private set; }
 

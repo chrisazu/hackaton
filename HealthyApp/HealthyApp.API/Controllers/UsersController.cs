@@ -39,7 +39,23 @@ namespace HealthyApp.API.Controllers
 			}
 		}
 
-		[HttpPost]
+        [HttpGet("GetUserByAspNetUserId/{aspNetUserId}")]
+        public async Task<IResult> GetUserByAspNetUserId(string aspNetUserId)
+        {
+            try
+            {
+                var command = new GetHealthyUserQuery(aspNetUserId);
+                var response = await _sender.Send(command);
+
+                return response is not null ? Results.Ok(response) : Results.NoContent();
+            }
+            catch (Exception ex)
+            {
+                return Results.BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
 		public async Task<IResult> PostUser(UserRequest userRequest)
 		{
 			try

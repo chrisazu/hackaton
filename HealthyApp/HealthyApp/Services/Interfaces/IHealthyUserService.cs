@@ -5,6 +5,8 @@ namespace HealthyApp.Services.Interfaces
 {
     public interface IHealthyUserService
     {
-        Task<HealthyUseResponse> Create(HealthyUserRequest request);
+        Task<HealthyUserResponse> Create(HealthyUserRequest request);
+        
+        Task<HealthyUserResponse> Get(HealthyUserRequest request);
     }
 }

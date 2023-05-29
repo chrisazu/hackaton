@@ -6,6 +6,6 @@ namespace HealthyApp.Domain.Interfaces
     {
         Task<IEnumerable<Goal>> GetByUserId(int userId, CancellationToken cancellationToken);
 
-		Task<Goal> GetByIdWithProgress(int id, CancellationToken cancellationToken);
+		Task<Goal> GetByIdWithUserProgress(int id, CancellationToken cancellationToken);
 	}
 }

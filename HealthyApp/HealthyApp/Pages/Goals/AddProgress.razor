@@ -1,0 +1,85 @@
+﻿@page "/goals/add-progress/{goalId:int}"
+@using HealthyApp.Models.Requests;
+@using HealthyApp.Models.Responses;
+@using HealthyApp.Models;
+@using HealthyApp.Services.Interfaces;
+@using HealthyApp.Services;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Net.Http.Json;
+
+@inject IGoalService _goalService
+@inject SignInManager<IdentityUser> _signInManager
+@inject IHealthyUserService _healthyUserService
+@inject IGoalProgressService _goalProgressService
+
+<PageTitle>@title</PageTitle>
+
+<h1>@title</h1>
+
+<h2>Ingresar progreso</h2>
+
+<EditForm Model="@model" OnValidSubmit="@HandleSubmit">
+    <div class="row">
+        <div class="col-1">
+            <label>
+                Tiempo:
+            </label>
+        </div>
+        <div class="col-2">
+            <InputNumber class="form-control col-sm-2 col-form-label" @bind-Value="model.DurationInMinutes" />
+        </div>
+        <div class="col-2">
+            <InputSelect id="timeType" class="form-select" @bind-Value="model.TimeType">
+                <option value="1">Horas</option>
+                <option value="2">Minutos</option>
+            </InputSelect>
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-primary">Cargar</button>
+        </div>
+    </div>
+    <div class="row">
+        @confirmationMessage
+    </div>
+</EditForm>
+
+@code {
+
+    private GoalResponse goal;
+
+    string title => $"Objetivo: {goal?.Name}";
+
+    string confirmationMessage;
+
+    private HealthyApp.Models.Requests.AddProgress model = new();
+
+    private IEnumerable<TimeType> timeTypes = Enumerable.Empty<TimeType>();
+
+    [Parameter]
+    public int goalId { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        var request = new HealthyUserRequest();
+        request.AspNetUserId = _signInManager.UserManager.Users.First().Id;
+        var response = await _healthyUserService.Get(request);
+
+        var goalRequest = new Models.Requests.GoalRequest() { UserId = response.Id, Id = goalId };
+        goal = await _goalService.GetById(goalRequest);
+    }
+
+    private async Task HandleSubmit()
+    {
+        var durationInMinutes = model.TimeType == TimeType.Hours ? 60 * model.DurationInMinutes : 1 * model.DurationInMinutes;
+
+        var request = new GoalProgressRequest() { DurationInMinutes = durationInMinutes, GoalId = goal.Id };
+        var response = await _goalProgressService.Create(request);
+
+        if (response.Id != 0)
+        {
+            confirmationMessage = "Progreso ingresado correctamente!";
+        }
+    }
+}

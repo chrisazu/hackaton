@@ -25,11 +25,11 @@ namespace HealthyApp.Application.Services.GoalProgress.Commands
 
 		public async Task<ProgressResponse> Handle(CreateProgressAndUpdateLevelCommand request, CancellationToken cancellationToken)
         {
-            var goal = await _goalRepository.GetByIdWithProgress(request.GoalId, cancellationToken);
+            var goal = await _goalRepository.GetByIdWithUserProgress(request.GoalId, cancellationToken);
 			
 			if (goal == null) { throw new ArgumentNullException("Goal not found"); }
 
-			var user = await _healthyUserRepository.GetById(goal.User.Id, cancellationToken);
+			var user = await _healthyUserRepository.GetByIdWithGoalsLevel(goal.User.Id, cancellationToken);
 
 			if (user == null) { throw new ArgumentNullException("User not found"); }
 
@@ -41,7 +41,7 @@ namespace HealthyApp.Application.Services.GoalProgress.Commands
 
 			user.UpdateLevel();
 
-			await _healthyUserRepository.Update(user, cancellationToken);
+			//await _healthyUserRepository.Update(user, cancellationToken);
 
 			return _mapper.Map<ProgressResponse>(progress);
         }

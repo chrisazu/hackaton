@@ -12,7 +12,7 @@ namespace HealthyApp.Domain.Models
 		public int Number { get; set; } = 1;
 
 		[Required]
-		public required string Name { get; set; }
+		public string Name { get; set; }
 
 		internal decimal Multiplier(int prevGoalValue) => prevGoalValue * (1 + Number / 10);
 

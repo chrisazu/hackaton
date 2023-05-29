@@ -1,0 +1,85 @@
+﻿@page "/goals/add"
+
+@using HealthyApp.Models.Requests;
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h2>Agregar objetivo</h2>
+<hr />
+<EditForm Model="model" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="Name" class="form-label">Nombre</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="model.Name" />
+        </div>
+        <ValidationMessage For="@(() => model.Name)" />
+    </div>
+    <div class="mb-3">
+        <label for="Description" class="form-label">Descripción</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="model.Description" />
+        </div>
+        <ValidationMessage For="@(() => model.Description)" />
+    </div>
+    <div class="mb-3">
+        <label for="Duration" class="form-label">Duración</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="duration" />
+        </div>
+        <ValidationMessage For="@(() => model.Duration)" />
+    </div>
+    <div class="mb-3">
+        <label for="Frequency" class="form-label">Frecuencia</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="model.Frequency" />
+        </div>
+        <ValidationMessage For="@(() => model.Frequency)" />
+    </div>
+    <div class="mb-3">
+        <label for="TimesPerFrequency" class="form-label">Tiempo de frecuencia</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="timesPerFrequency" />
+        </div>
+        <ValidationMessage For="@(() => model.TimesPerFrequency)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancelar</button>
+    </div>
+</EditForm>
+
+@code {
+
+    private AddGoal model = new();
+
+    string duration = "";
+    string timesPerFrequency = "";
+
+    protected async override Task OnInitializedAsync()
+    {
+        duration = new DateTime(model.Duration.Ticks).ToString("HH:mm");
+        timesPerFrequency = model.TimesPerFrequency.ToString();
+    }
+
+    private string GetA(TimeSpan a)
+    {
+        return new DateTime(a.Ticks).ToString();
+    }
+
+    protected async Task HandleSubmit()
+    {
+        
+        Cancel();
+    }
+
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/goals");
+    }
+}
+
+
+@code {
+
+}
