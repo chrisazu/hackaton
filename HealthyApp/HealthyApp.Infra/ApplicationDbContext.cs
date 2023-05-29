@@ -25,7 +25,9 @@ namespace HealthyApp.Infra
 
 		public DbSet<Progress> Progresses { get; set; }
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //public DbSet<DietProgress> DietProgresses { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			if (!optionsBuilder.IsConfigured)
 			{

@@ -12,7 +12,7 @@ namespace HealthyApp.API.Profiles
         public ProgressProfile()
         {
 			CreateMap<ProgressRequest, CreateProgressAndUpdateLevelCommand>()				
-				.ForMember(m => m.Value, dest => dest.MapFrom(src => TimeSpan.FromMinutes(src.DurationInMinutes)));
+				.ForMember(m => m.Value, dest => dest.MapFrom(src => TimeSpan.FromMinutes(src.Value)));
 
 			CreateMap<CreateProgressAndUpdateLevelCommand, Progress> ();
 

@@ -4,14 +4,13 @@
 @using HealthyApp.Services.Interfaces;
 @using HealthyApp.Services;
 @using Microsoft.AspNetCore.Identity;
+@using Microsoft.AspNetCore.Http
 
 @inject IGoalService _goalService
 @inject SignInManager<IdentityUser> _signInManager
 @inject IHealthyUserService _healthyUserService
 @inject NavigationManager NavigationManager
-@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor httpContextAccessor
-
 
 <PageTitle>Mis objetivos</PageTitle>
 
@@ -33,6 +32,7 @@ else
                 <th>Tiempo de frequencia</th>
                 <th>Kilogramos</th>
                 <th>Tipo</th>
+                <th>Fecha de creación</th>
                 <th></th>
             </tr>
         </thead>
@@ -41,34 +41,33 @@ else
             {
                 <tr>
                     <td>@goal.Name </td>
-                    <td>@goal.Description </td>
-                    @*<td>@(isDiet!) ? @goal.Duration horas : @string.Empty </td>*@
-
+                    <td>@goal.Description </td>                    
                     <td>
-                        @if (goal.Type != "Diet")
+                        @if (!goal.IsDiet)
                         {
-                            @string.Format("{0} horas",goal.Duration)
+                            @goal.GetLabelDuration
                         }
                     </td>
                     <td>
-                        @if (goal.Type != "Diet")
+                        @if (!goal.IsDiet)
                         {
-                            @string.Format("{0}",goal.Frequency)
+                            @goal.GetLabelFrequency
                         }
                     </td>
                     <td>
-                        @if (goal.Type != "Diet")
+                        @if (!goal.IsDiet)
                         {
-                            @string.Format("{0} veces",goal.TimesPerFrequency)
+                            @goal.GetLabelTimesPerFrequency
                         }
                     </td>
                     <td>
-                        @if (goal.Type == "Diet")
+                        @if (goal.IsDiet)
                         {
-                            @string.Format("{0}",goal.Kilograms)
+                            @goal.Kilograms
                         }
                     </td>
                     <td>@goal.Type </td>
+                    <td>@goal.CreatedDate.ToShortDateString()</td>
                     <td><a href="@string.Format("goals/add-progress/{0}",goal.Id)">Agregar progreso</a></td>
                 </tr>
             }
@@ -87,8 +86,6 @@ else
 @code {
 
     private GoalResponse[] goals;
-
-    private bool isDiet;
 
     protected async override Task OnInitializedAsync()
     {

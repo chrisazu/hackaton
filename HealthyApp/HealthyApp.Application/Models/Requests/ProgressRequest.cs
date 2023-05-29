@@ -1,7 +1,9 @@
 ﻿namespace HealthyApp.Application.Models.Requests
 {
-	public class ProgressRequest
-	{
-		public required int DurationInMinutes { get; set; } = default;		
-	}
+    public class ProgressRequest
+    {
+        public int Value { get; set; } = default;
+
+        public int Kilograms { get; set; }
+    }
 }

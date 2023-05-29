@@ -25,30 +25,30 @@
 
 <EditForm Model="@model" OnValidSubmit="@HandleSubmit">
     <DataAnnotationsValidator />
-    @if (goal.Type == "2")
+    @if (goal != null && goal.IsDiet)
     {
         <div class="mb-3">
             <label for="DurationInMinutes" class="form-label">Kilos</label>
             <div class="col-md-2">
-                <InputNumber id="DurationInMinutes" class="form-control" @bind-Value="model.DurationInMinutes" />
+                <InputNumber id="DurationInMinutes" class="form-control" @bind-Value="model.Value" />
             </div>
-            <ValidationMessage For="@(() => model.DurationInMinutes)" />
-        </div>        
+            <ValidationMessage For="@(() => model.Value)" />
+        </div>
     }
     else
     {
         <div class="mb-3">
             <label for="DurationInMinutes" class="form-label">Tiempo</label>
             <div class="col-md-2">
-                <InputNumber id="DurationInMinutes" class="form-control" @bind-Value="model.DurationInMinutes" />
+                <InputNumber id="DurationInMinutes" class="form-control" @bind-Value="model.Value" />
             </div>
-            <ValidationMessage For="@(() => model.DurationInMinutes)" />
+            <ValidationMessage For="@(() => model.Value)" />
         </div>
         <div class="mb-3">
             <label for="TimeType" class="form-label">Medida</label>
             <div class="col-md-2">
                 <InputSelect id="TimeType" class="form-select" @bind-Value="model.TimeType">
-                    <option value="1">Horas</option>
+                    <option selected value="1">Horas</option>
                     <option value="2">Minutos</option>
                 </InputSelect>
             </div>
@@ -83,9 +83,9 @@
 
     private async Task HandleSubmit()
     {
-        var durationInMinutes = model.TimeType == TimeType.Hours ? 60 * model.DurationInMinutes : 1 * model.DurationInMinutes;
+        var value = model.TimeType == TimeType.Hours && !goal.IsDiet ? 60 * model.Value : 1 * model.Value;
 
-        var request = new GoalProgressRequest() { DurationInMinutes = durationInMinutes, GoalId = goal.Id };
+        var request = new GoalProgressRequest() { Value = value, GoalId = goal.Id };
         var response = await _goalProgressService.Create(request);
 
         if (response.Id != 0)

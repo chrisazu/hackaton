@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using HealthyApp.Domain.Enums;
-
-namespace HealthyApp.Application.Models.Requests
+﻿namespace HealthyApp.Application.Models.Requests
 {
     public class GoalRequest
     {
@@ -15,9 +6,9 @@ namespace HealthyApp.Application.Models.Requests
 
         public required string Description { get; set; }
 
-        public required string Type { get; set; }
+        public required int Type { get; set; }
 
-        public required string Frequency { get; set; }
+        public int Frequency { get; set; }
 
         public int TimesPerFrequency { get; set; } = 0;
 

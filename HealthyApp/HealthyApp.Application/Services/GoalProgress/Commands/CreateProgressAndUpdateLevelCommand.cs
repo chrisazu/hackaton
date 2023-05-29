@@ -7,6 +7,8 @@ namespace HealthyApp.Application.Services.GoalProgress.Commands
     {
 		public required int GoalId { get; set; }
 
-		public required TimeSpan Value { get; set; }
+		public TimeSpan Value { get; set; }
+
+        public int Kilograms { get; set; }
     }
 }

@@ -4,6 +4,6 @@
     {
         public required int GoalId { get; set; }
 
-        public required int DurationInMinutes { get; set; }
+        public required int Value { get; set; }
     }
 }

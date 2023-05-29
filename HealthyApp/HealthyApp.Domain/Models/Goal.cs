@@ -1,55 +1,68 @@
-﻿using HealthyApp.Domain.Enums;
-using HealthyApp.Domain.Interfaces;
+﻿using System.ComponentModel.DataAnnotations;
 
-using System.ComponentModel.DataAnnotations;
+using HealthyApp.Domain.Enums;
 
 namespace HealthyApp.Domain.Models
 {
-	public class Goal
-	{
-		[Key]
-		public int Id { get; set; }
+    public class Goal
+    {
+        [Key]
+        public int Id { get; set; }
 
-		[Required]
-		[StringLength(100)]
-		public required string Name { get; set; }
+        [Required]
+        [StringLength(100)]
+        public required string Name { get; set; }
 
-		[Required]
-		[StringLength(100)]
-		public required string Description { get; set; }
+        [Required]
+        [StringLength(100)]
+        public required string Description { get; set; }
 
-		[Required]
-		public required GoalType Type { get; set; }
+        [Required]
+        public required GoalType Type { get; set; }
 
-		[Required]
-		public GoalStatus Status { get; private set; }
+        [Required]
+        public GoalStatus Status { get; private set; }
 
-		[Required]
-		public required GoalFrequency Frequency { get; set; }
+        [Required]
+        public required GoalFrequency Frequency { get; set; }
 
-		public int TimesPerFrequency { get; set; } = 0;
+        public int TimesPerFrequency { get; set; } = 0;
 
         public int Kilograms { get; set; }
 
         public TimeSpan Duration { get; set; } = default;
 
-		public virtual User User { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
-		public virtual List<Progress> Progresses { get; private set; }
+        public virtual User User { get; set; }
 
-		public void AddProgress(Progress goalProgress)
-		{
-			Progresses ??= new List<Progress>();
+        public virtual List<Progress> Progresses { get; private set; }
+        
+        //public virtual List<DietProgress> DietProgresses { get; private set; }
 
-			Progresses.Add(goalProgress);
+        public void AddProgress(Progress goalProgress)
+        {
+            Progresses ??= new List<Progress>();
 
-			Status = GoalStatus.OnProgress;
+            Progresses.Add(goalProgress);
 
-			if (Progresses.Sum(s => s.Value.TotalHours) >= Duration.TotalHours * TimesPerFrequency)
-			{
-				Status = GoalStatus.Accomplished;
-			}			
-		}
+            Status = GoalStatus.OnProgress;
+
+            if (Type != GoalType.Diet)
+            {
+                if (Progresses.Sum(s => s.Value.TotalHours) >= Duration.TotalHours * TimesPerFrequency)
+                {
+                    Status = GoalStatus.Accomplished;
+                }
+            }
+            else
+            {
+                //if (DietProgresses.Sum(s => s.Value) >= Kilograms)
+                //{
+                //    Status = GoalStatus.Accomplished;
+                //}
+            }
+        }
     }
 }
 

@@ -83,8 +83,6 @@ namespace HealthyApp.Services
         {
             try
             {
-                var asd = request.ToJson();
-
                 HttpResponseMessage response = await _client.PostAsJsonAsync($"user/{request.UserId}/goals", request);
 
                 if (response.IsSuccessStatusCode)

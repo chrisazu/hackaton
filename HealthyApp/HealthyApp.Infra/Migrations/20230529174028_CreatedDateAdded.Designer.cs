@@ -4,6 +4,7 @@ using HealthyApp.Infra;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthyApp.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230529174028_CreatedDateAdded")]
+    partial class CreatedDateAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +71,7 @@ namespace HealthyApp.Infra.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Goals", (string)null);
+                    b.ToTable("Goals");
                 });
 
             modelBuilder.Entity("HealthyApp.Domain.Models.Level", b =>
@@ -92,7 +95,7 @@ namespace HealthyApp.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Levels", (string)null);
+                    b.ToTable("Levels");
 
                     b.HasData(
                         new
@@ -188,7 +191,7 @@ namespace HealthyApp.Infra.Migrations
 
                     b.HasIndex("GoalId");
 
-                    b.ToTable("Progresses", (string)null);
+                    b.ToTable("Progresses");
                 });
 
             modelBuilder.Entity("HealthyApp.Domain.Models.Reward", b =>
@@ -216,7 +219,7 @@ namespace HealthyApp.Infra.Migrations
 
                     b.HasIndex("LevelId");
 
-                    b.ToTable("Rewards", (string)null);
+                    b.ToTable("Rewards");
                 });
 
             modelBuilder.Entity("HealthyApp.Domain.Models.User", b =>
@@ -251,7 +254,7 @@ namespace HealthyApp.Infra.Migrations
 
                     b.HasIndex("LevelId");
 
-                    b.ToTable("HealthyUsers", (string)null);
+                    b.ToTable("HealthyUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
