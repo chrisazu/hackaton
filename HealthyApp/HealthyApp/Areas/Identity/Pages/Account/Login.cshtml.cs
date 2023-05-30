@@ -136,7 +136,7 @@ namespace HealthyApp.Areas.Identity.Pages.Account
                     await _signInManager.RefreshSignInAsync(loggedUser);
 
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    return LocalRedirect("/level/index");
                 }
                 if (result.RequiresTwoFactor)
                 {

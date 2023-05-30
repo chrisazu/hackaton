@@ -19,24 +19,34 @@ else
     <EditForm Model="model" OnValidSubmit="HandleSubmit">
         <div class="mb-3">
             <label for="Type" class="form-label">Objetivos</label>
-            <div class="col-md-2">
-                <InputSelect @bind-Value="model.SelectedGoal" class="form-select">
-                    @foreach (var goal in goals)
+            @if (goals?.Count() == 0)
+            {
+                <div class="col-2">
+                    <p><em>¡Cargá tu primer objetivo!</em></p>
+                    <a type="button" class="btn btn-primary" href="@string.Format("goals/add")">Crear objetivo</a>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-2">
+                    <InputSelect @bind-Value="model.SelectedGoal" class="form-select">
+                        @foreach (var goal in goals)
+                        {
+                            <option value="@goal.Id">@goal.Name</option>
+                        }
+                    </InputSelect>
+                </div>
+                <br />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Pedir consejo</button>
+                    @if (showSpinner)
                     {
-                        <option value="@goal.Id">@goal.Name</option>
+                        <br />
+                        <p>Esperando respuesta...</p>
+                        <div class="spinner-border" role="status"></div>
                     }
-                </InputSelect>
-            </div>
-            <br />
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Pedir consejo</button>
-                @if (showSpinner)
-                {
-                    <br />
-                    <p>Esperando respuesta...</p>
-                    <div class="spinner-border" role="status"></div>
-                }
-            </div>
+                </div>
+            }
         </div>
         <p style="align-content:end">
             <strong>@messageSent</strong>
