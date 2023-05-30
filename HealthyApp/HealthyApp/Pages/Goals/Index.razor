@@ -1,6 +1,8 @@
 ﻿@page "/goals/index"
 @page "/goals/index/{action}"
 @using Blazored.Toast.Services;
+@using Blazored.Toast;
+@using Blazored.Toast.Configuration;
 @using HealthyApp.Models.Requests;
 @using HealthyApp.Models.Responses;
 @using HealthyApp.Services.Interfaces;
@@ -80,6 +82,13 @@ else
     }
     <a type="button" class="btn btn-primary" href="@string.Format("goals/add")">Crear objetivo</a>
 </div>
+
+<BlazoredToasts Position="ToastPosition.TopRight"
+                        Timeout="5"
+                        IconType="IconType.FontAwesome"
+                        SuccessClass="success-toast-override"
+                        SuccessIcon="fa fa-thumbs-up"
+                        ErrorIcon="fa fa-bug" />
 
 @code {
 
