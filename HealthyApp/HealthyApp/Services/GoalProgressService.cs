@@ -47,17 +47,6 @@ namespace HealthyApp.Services
                 _logger.LogError(ex.Message);
                 throw ex;
             }
-
-            //async Task UpdateClaim(GoalProgressResponse? result)
-            //{
-            //    var loggedUser = _signInManager.UserManager.Users.First();
-
-            //    var levelClaim = _signInManager.Context.User.Claims.FirstOrDefault(c => c.Type == "level");
-
-            //    await _signInManager.UserManager.RemoveClaimAsync(loggedUser, levelClaim);
-
-            //    await _signInManager.UserManager.AddClaimAsync(loggedUser, new Claim("level", result.NewLevel.Name));
-            //}
         }
     }
 }

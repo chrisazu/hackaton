@@ -7,8 +7,6 @@ namespace HealthyApp.Infra
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        //private readonly IConfiguration _config;
-
         public ApplicationDbContext()
         {
             // ToDo: inject config
