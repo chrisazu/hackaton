@@ -122,10 +122,18 @@ namespace HealthyApp.Areas.Identity.Pages.Account
                     var loggedUser = _signInManager.UserManager.Users.First();
                     request.AspNetUserId = loggedUser.Id;
                     
-                    var response = await _healthyUserService.Get(request);    
-                    
+                    var response = await _healthyUserService.Get(request);
+
+                    var userClaims = await _signInManager.UserManager.GetClaimsAsync(loggedUser);
+
+                    await _signInManager.UserManager.RemoveClaimsAsync(loggedUser, userClaims);
+
                     await _signInManager.UserManager.AddClaimAsync(loggedUser, new Claim("level", response.Level.Name));
                     await _signInManager.UserManager.AddClaimAsync(loggedUser, new Claim("userId", response.Id.ToString()));
+                    await _signInManager.UserManager.AddClaimAsync(loggedUser, new Claim("userFirstName", response.Name));
+                    await _signInManager.UserManager.AddClaimAsync(loggedUser, new Claim("aspNetUserId", response.AspNetUserId));
+
+                    await _signInManager.RefreshSignInAsync(loggedUser);
 
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);

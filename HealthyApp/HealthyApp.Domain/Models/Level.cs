@@ -19,5 +19,7 @@ namespace HealthyApp.Domain.Models
 		public string Description { get; set; }
 
 		public virtual List<Reward> Rewards { get; set; }
+
+		public string Url { get; set; }
 	}
 }

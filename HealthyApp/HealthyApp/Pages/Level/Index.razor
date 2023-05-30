@@ -1,0 +1,39 @@
+﻿@page "/level/index"
+
+@using HealthyApp.Models.Responses;
+@using HealthyApp.Services.Interfaces;
+@using Microsoft.AspNetCore.Http;
+
+@inject IHealthyUserService _healthyUserService
+@inject IHttpContextAccessor httpContextAccessor
+
+<PageTitle>Mi nivel</PageTitle>
+
+<h1>Mi nivel es: @user?.Level.Name #@user?.Level.Number </h1>
+
+<img src="@user?.Level.Url" asp-append-version="true" width="250px"/>
+<h2>@user?.Level.Description</h2>
+
+<h1>Tus recompesas son:</h1>
+
+@{
+    if (user?.Level.Rewards != null)
+    {
+        foreach (var reward in user.Level.Rewards)
+        {
+            <h3>Por ser @reward.Name, @reward.Description.ToLower().</h3>
+        }
+    }
+}
+
+@code {
+    private HealthyUserResponse user;
+
+    protected async override Task OnInitializedAsync()
+    {
+        var aspNetUserId = httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "aspNetUserId")?.Value;
+
+        var request = new Models.Requests.HealthyUserRequest() { AspNetUserId = aspNetUserId };
+        user = await _healthyUserService.Get(request);
+    }
+}

@@ -4,7 +4,6 @@ using HealthyApp.Infra;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,11 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthyApp.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230529203232_InitialModel")]
-    partial class InitialModel
+    partial class _ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,6 +80,10 @@ namespace HealthyApp.Infra.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Levels");
@@ -91,72 +92,82 @@ namespace HealthyApp.Infra.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Estoy como Leonardo DiCaprio",
+                            Description = "Estás como Leonardo DiCaprio",
                             Name = "Beginner",
-                            Number = 1
+                            Number = 1,
+                            Url = "https://m.media-amazon.com/images/M/MV5BMjI0MTg3MzI0M15BMl5BanBnXkFtZTcwMzQyODU2Mw@@.jpg"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Estoy como Emma Stone",
+                            Description = "Estás como Emma Stone",
                             Name = "Intermediate",
-                            Number = 2
+                            Number = 2,
+                            Url = "https://m.media-amazon.com/images/M/MV5BMjI4NjM1NDkyN15BMl5BanBnXkFtZTgwODgyNTY1MjE@.jpg"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Estoy como Chris Pratt",
+                            Description = "Estás como Chris Pratt",
                             Name = "Upper Intermediate",
-                            Number = 3
+                            Number = 3,
+                            Url = "https://m.media-amazon.com/images/M/MV5BZjdkYjg1NzMtOTY2YS00ZWI1LWEwZWYtOTU1YTM2ODA2ZWY5XkEyXkFqcGdeQXVyMTM1MjAxMDc3.jpg"
                         },
                         new
                         {
                             Id = 4,
-                            Description = "Estoy como Scarlett Johansson",
+                            Description = "Estás como Scarlett Johansson",
                             Name = "Advanced",
-                            Number = 4
+                            Number = 4,
+                            Url = "https://m.media-amazon.com/images/M/MV5BMTM3OTUwMDYwNl5BMl5BanBnXkFtZTcwNTUyNzc3Nw@@.jpg"
                         },
                         new
                         {
                             Id = 5,
-                            Description = "Estoy como Dwayne Johnson",
+                            Description = "Estás como Dwayne Johnson",
                             Name = "Skilled",
-                            Number = 5
+                            Number = 5,
+                            Url = "https://m.media-amazon.com/images/M/MV5BMTkyNDQ3NzAxM15BMl5BanBnXkFtZTgwODIwMTQ0NTE@.jpg"
                         },
                         new
                         {
                             Id = 6,
-                            Description = "Estoy como Angelina Jolie",
+                            Description = "Estás como Angelina Jolie",
                             Name = "Expert",
-                            Number = 6
+                            Number = 6,
+                            Url = ""
                         },
                         new
                         {
                             Id = 7,
-                            Description = "Estoy como Tom Hardy",
+                            Description = "Estás como Tom Hardy",
                             Name = "Elite",
-                            Number = 7
+                            Number = 7,
+                            Url = ""
                         },
                         new
                         {
                             Id = 8,
-                            Description = "Estoy como Gal Gadot",
+                            Description = "Estás como Gal Gadot",
                             Name = "Grandmaster",
-                            Number = 8
+                            Number = 8,
+                            Url = ""
                         },
                         new
                         {
                             Id = 9,
-                            Description = "Estoy como Chris Hemsworth",
+                            Description = "Estás como Chris Hemsworth",
                             Name = "Masterful",
-                            Number = 8
+                            Number = 9,
+                            Url = ""
                         },
                         new
                         {
                             Id = 10,
-                            Description = "Estoy como Arnold Schwarzenegger",
+                            Description = "Estás como Arnold Schwarzenegger",
                             Name = "Champion",
-                            Number = 8
+                            Number = 10,
+                            Url = "https://m.media-amazon.com/images/M/MV5BMTI3MDc4NzUyMV5BMl5BanBnXkFtZTcwMTQyMTc5MQ@@.jpg"
                         });
                 });
 
@@ -204,6 +215,68 @@ namespace HealthyApp.Infra.Migrations
                     b.HasIndex("LevelId");
 
                     b.ToTable("Rewards");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Tenés descuento en tiendas D1",
+                            Name = "Beginner"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Tenés descuento en tiendas Ara",
+                            Name = "Intermediate"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Tenés descuento en tiendas Éxito",
+                            Name = "Upper Intermediate"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Tenés descuento en tiendas Olympica",
+                            Name = "Advanced"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Tenés descuento en tiendas Carulla",
+                            Name = "Skilled"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Tenés descuento en tiendas Jumbo",
+                            Name = "Expert"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Tenés descuento en tiendas Metro",
+                            Name = "Elite"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Tenés descuento en tiendas SmartFit",
+                            Name = "Grandmaster"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "Tenés descuento en tiendas Adidas",
+                            Name = "Masterful"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "Tenés descuento en tiendas Decathlon",
+                            Name = "Champion"
+                        });
                 });
 
             modelBuilder.Entity("HealthyApp.Domain.Models.User", b =>

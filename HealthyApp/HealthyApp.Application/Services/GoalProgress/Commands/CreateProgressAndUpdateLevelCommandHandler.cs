@@ -14,13 +14,15 @@ namespace HealthyApp.Application.Services.GoalProgress.Commands
         private readonly IGoalRepository _goalRepository;
         private readonly IHealthyUserRepository _healthyUserRepository;
         private readonly ILevelRepository _levelRepository;
+        private readonly IRewardRepository _rewardlRepository;
         private readonly IMapper _mapper;
 
-        public CreateProgressAndUpdateLevelCommandHandler(IGoalRepository goalRepository, IMapper mapper, IHealthyUserRepository healthyUserRepository, ILevelRepository levelRepository)
+        public CreateProgressAndUpdateLevelCommandHandler(IGoalRepository goalRepository, IMapper mapper, IHealthyUserRepository healthyUserRepository, ILevelRepository levelRepository, IRewardRepository rewardlRepository)
         {
             _goalRepository = goalRepository;
             _healthyUserRepository = healthyUserRepository;
             _levelRepository = levelRepository;
+            _rewardlRepository = rewardlRepository;
             _mapper = mapper;
         }
 
@@ -34,23 +36,15 @@ namespace HealthyApp.Application.Services.GoalProgress.Commands
 
             if (user == null) { throw new ArgumentNullException("User not found"); }
 
-            Progress progress; // _mapper.Map<Progress>(request);
+            Progress progress;
 
             if (goal is DietGoal)
             {
                 progress = _mapper.Map<DietProgress>(request);
-
-                //var dietGoal = (DietGoal)goal;
-
-                //dietGoal.AddDietProgress(progress);
             }
             else
             {
                 progress = _mapper.Map<ExerciseProgress>(request);
-
-                //var execirseGoal = (ExerciseGoal)goal;
-
-                //execirseGoal.AddExerciseProgress(progress);
             }
 
             goal.AddProgress(progress);
@@ -59,9 +53,17 @@ namespace HealthyApp.Application.Services.GoalProgress.Commands
 
             if (user.ShouldLevelBeUpdated())
             {
-                var nextLevel = await _levelRepository.GetById(user.Level.Id++, cancellationToken);
+                var idNextLevel = user.Level.Id + 1;
+
+                var nextLevel = await _levelRepository.GetById(idNextLevel, cancellationToken);
+
+                nextLevel.Rewards = user.Level.Rewards;
 
                 user.Level = nextLevel;
+
+                var nextReward = await _rewardlRepository.GetById(nextLevel.Id, cancellationToken);
+
+                user.Level.Rewards.Add(nextReward);
 
                 await _healthyUserRepository.Update(user, cancellationToken);
             }

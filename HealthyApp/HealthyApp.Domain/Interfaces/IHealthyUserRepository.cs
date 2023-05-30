@@ -6,6 +6,6 @@ namespace HealthyApp.Domain.Interfaces
 	{
 		Task<User> GetByIdWithGoalsLevel(int id, CancellationToken cancellationToken);
 		
-		Task<User> GetByAspNetUserIdWithLevel(string aspNetUserId, CancellationToken cancellationToken);
+		Task<User> GetByAspNetUserIdWithLevelRewards(string aspNetUserId, CancellationToken cancellationToken);
 	}
 }

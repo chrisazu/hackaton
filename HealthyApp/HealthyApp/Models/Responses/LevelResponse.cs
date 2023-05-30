@@ -12,6 +12,8 @@ namespace HealthyApp.Models.Responses
 
 		public string Description { get; set; }
 
-		public virtual List<RewardResponse> Rewards { get; set; }
+        public string Url { get; set; }
+
+        public virtual List<RewardResponse> Rewards { get; set; }
 	}
 }

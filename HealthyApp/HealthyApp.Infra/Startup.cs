@@ -11,6 +11,7 @@ namespace HealthyApp.Infra
         {
             services.AddDbContext<ApplicationDbContext>();
             services.AddScoped<IHealthyUserRepository, HealthyUserRepository>();
+            services.AddScoped<IRewardRepository, RewardRepository>();
             services.AddScoped<ILevelRepository, LevelRepository>();
 			services.AddScoped<IGoalRepository, GoalRepository>();
 		}

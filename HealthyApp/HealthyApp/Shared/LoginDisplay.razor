@@ -1,7 +1,8 @@
 ﻿<AuthorizeView>
     <Authorized>
-        <a href="Identity/Account/Manage">Hola, @context.User.Identity?.Name! </a>
-        <div> Tu nivel es: @context.User.Claims.FirstOrDefault(c => c.Type == "level")?.Value</div>
+        <a href="Identity/Account/Manage">Hola, @context.User.Claims.FirstOrDefault(c => c.Type == "userFirstName")?.Value </a>
+        <a href="level/index">Tu nivel es: @context.User.Claims.FirstOrDefault(c => c.Type == "level")?.Value </a>
+        
         <form method="post" action="Identity/Account/Logout">
             <button type="submit" class="nav-link btn btn-link">Log out</button>
         </form>

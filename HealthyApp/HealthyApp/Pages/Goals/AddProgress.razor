@@ -68,8 +68,6 @@
 
     private HealthyApp.Models.Requests.AddProgress model = new();
 
-    private IEnumerable<TimeType> timeTypes = Enumerable.Empty<TimeType>();
-
     [Parameter]
     public int goalId { get; set; }
 
@@ -83,7 +81,7 @@
 
     private async Task HandleSubmit()
     {
-        var value = model.TimeType == TimeType.Hours && !goal.IsDiet ? 60 * model.Value : 1 * model.Value;
+        var value = model.TimeType == 1 && !goal.IsDiet ? 60 * model.Value : 1 * model.Value;
 
         var request = new GoalProgressRequest() { Value = value, GoalId = goal.Id };
         var response = await _goalProgressService.Create(request);

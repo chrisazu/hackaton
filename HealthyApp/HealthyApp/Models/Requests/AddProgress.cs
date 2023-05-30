@@ -6,6 +6,6 @@
 
         public int Value { get; set; }
 
-        public TimeType TimeType { get; set; } = TimeType.Hours;
+        public int TimeType { get; set; } = 1;
     }
 }

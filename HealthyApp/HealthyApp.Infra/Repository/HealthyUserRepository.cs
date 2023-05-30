@@ -14,14 +14,14 @@ namespace HealthyApp.Infra.Repository
 			_dbSet = dbContext.Set<User>();
 		}
 
-        public async Task<User> GetByAspNetUserIdWithLevel(string aspNetUserId, CancellationToken cancellationToken)
+        public async Task<User> GetByAspNetUserIdWithLevelRewards(string aspNetUserId, CancellationToken cancellationToken)
         {
-            return await _dbSet.Include("Level").FirstOrDefaultAsync(p => p.AspNetUserId == aspNetUserId, cancellationToken);
+            return await _dbSet.Include("Level").Include("Level.Rewards").FirstOrDefaultAsync(p => p.AspNetUserId == aspNetUserId, cancellationToken);
         }
 
         public async Task<User> GetByIdWithGoalsLevel(int id, CancellationToken cancellationToken)
 		{
-			return await _dbSet.Include("Goals").Include("Level").FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+			return await _dbSet.Include("Goals").Include("Level").Include("Level.Rewards").FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 		}
 	}
 }

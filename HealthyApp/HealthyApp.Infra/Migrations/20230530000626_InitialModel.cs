@@ -60,7 +60,8 @@ namespace HealthyApp.Infra.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Number = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -341,19 +342,36 @@ namespace HealthyApp.Infra.Migrations
 
             migrationBuilder.InsertData(
                 table: "Levels",
-                columns: new[] { "Id", "Description", "Name", "Number" },
+                columns: new[] { "Id", "Description", "Name", "Number", "Url" },
                 values: new object[,]
                 {
-                    { 1, "Estoy como Leonardo DiCaprio", "Beginner", 1 },
-                    { 2, "Estoy como Emma Stone", "Intermediate", 2 },
-                    { 3, "Estoy como Chris Pratt", "Upper Intermediate", 3 },
-                    { 4, "Estoy como Scarlett Johansson", "Advanced", 4 },
-                    { 5, "Estoy como Dwayne Johnson", "Skilled", 5 },
-                    { 6, "Estoy como Angelina Jolie", "Expert", 6 },
-                    { 7, "Estoy como Tom Hardy", "Elite", 7 },
-                    { 8, "Estoy como Gal Gadot", "Grandmaster", 8 },
-                    { 9, "Estoy como Chris Hemsworth", "Masterful", 8 },
-                    { 10, "Estoy como Arnold Schwarzenegger", "Champion", 8 }
+                    { 1, "Estás como Leonardo DiCaprio", "Beginner", 1, "https://m.media-amazon.com/images/M/MV5BMjI0MTg3MzI0M15BMl5BanBnXkFtZTcwMzQyODU2Mw@@.jpg" },
+                    { 2, "Estás como Emma Stone", "Intermediate", 2, "https://m.media-amazon.com/images/M/MV5BMjI4NjM1NDkyN15BMl5BanBnXkFtZTgwODgyNTY1MjE@.jpg" },
+                    { 3, "Estás como Chris Pratt", "Upper Intermediate", 3, "https://m.media-amazon.com/images/M/MV5BZjdkYjg1NzMtOTY2YS00ZWI1LWEwZWYtOTU1YTM2ODA2ZWY5XkEyXkFqcGdeQXVyMTM1MjAxMDc3.jpg" },
+                    { 4, "Estás como Scarlett Johansson", "Advanced", 4, "https://m.media-amazon.com/images/M/MV5BMTM3OTUwMDYwNl5BMl5BanBnXkFtZTcwNTUyNzc3Nw@@.jpg" },
+                    { 5, "Estás como Dwayne Johnson", "Skilled", 5, "https://m.media-amazon.com/images/M/MV5BMTkyNDQ3NzAxM15BMl5BanBnXkFtZTgwODIwMTQ0NTE@.jpg" },
+                    { 6, "Estás como Angelina Jolie", "Expert", 6, "" },
+                    { 7, "Estás como Tom Hardy", "Elite", 7, "" },
+                    { 8, "Estás como Gal Gadot", "Grandmaster", 8, "" },
+                    { 9, "Estás como Chris Hemsworth", "Masterful", 9, "" },
+                    { 10, "Estás como Arnold Schwarzenegger", "Champion", 10, "https://m.media-amazon.com/images/M/MV5BMTI3MDc4NzUyMV5BMl5BanBnXkFtZTcwMTQyMTc5MQ@@.jpg" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Rewards",
+                columns: new[] { "Id", "Description", "LevelId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Tenés descuento en tiendas D1", null, "Beginner" },
+                    { 2, "Tenés descuento en tiendas Ara", null, "Intermediate" },
+                    { 3, "Tenés descuento en tiendas Éxito", null, "Upper Intermediate" },
+                    { 4, "Tenés descuento en tiendas Olympica", null, "Advanced" },
+                    { 5, "Tenés descuento en tiendas Carulla", null, "Skilled" },
+                    { 6, "Tenés descuento en tiendas Jumbo", null, "Expert" },
+                    { 7, "Tenés descuento en tiendas Metro", null, "Elite" },
+                    { 8, "Tenés descuento en tiendas SmartFit", null, "Grandmaster" },
+                    { 9, "Tenés descuento en tiendas Adidas", null, "Masterful" },
+                    { 10, "Tenés descuento en tiendas Decathlon", null, "Champion" }
                 });
 
             migrationBuilder.CreateIndex(
