@@ -10,10 +10,10 @@ namespace HealthyApp.Services
 {
     public class GoalService : IGoalService
     {
-        private readonly HttpClient _client;
+        private readonly BackendApiClient _client;
         private readonly ILogger<GoalService> _logger;
 
-        public GoalService(HttpClient client, ILogger<GoalService> logger)
+        public GoalService(BackendApiClient client, ILogger<GoalService> logger)
         {
             _client = client;
             _logger = logger;
@@ -23,7 +23,7 @@ namespace HealthyApp.Services
         {
             try
             {
-                HttpResponseMessage response = await _client.GetAsync($"user/{request.UserId}/goals");
+                HttpResponseMessage response = await _client.HttpClient.GetAsync($"user/{request.UserId}/goals");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -43,7 +43,7 @@ namespace HealthyApp.Services
         {
             try
             {
-                HttpResponseMessage response = await _client.GetAsync($"user/{request.UserId}/goals/{request.Id}");
+                HttpResponseMessage response = await _client.HttpClient.GetAsync($"user/{request.UserId}/goals/{request.Id}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -63,7 +63,7 @@ namespace HealthyApp.Services
         {
             try
             {
-                HttpResponseMessage response = await _client.PostAsJsonAsync("users", request);
+                HttpResponseMessage response = await _client.HttpClient.PostAsJsonAsync("users", request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -83,7 +83,7 @@ namespace HealthyApp.Services
         {
             try
             {
-                HttpResponseMessage response = await _client.PostAsJsonAsync($"user/{request.UserId}/goals", request);
+                HttpResponseMessage response = await _client.HttpClient.PostAsJsonAsync($"user/{request.UserId}/goals", request);
 
                 if (response.IsSuccessStatusCode)
                 {

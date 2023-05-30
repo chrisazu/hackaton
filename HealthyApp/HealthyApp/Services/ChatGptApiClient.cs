@@ -2,16 +2,16 @@
 {
     public class ChatGptApiClient
     {
-        private readonly HttpClient httpClient;
+        public HttpClient HttpClient { get; set; }
 
         public ChatGptApiClient(HttpClient httpClient)
         {
-            this.httpClient = httpClient;
+            HttpClient = httpClient;
         }
 
         public string GetBaseUrl()
         {
-            return httpClient.BaseAddress.ToString();
+            return HttpClient.BaseAddress.ToString();
         }
     }
 }

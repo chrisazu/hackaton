@@ -2,16 +2,16 @@
 {
     public class BackendApiClient
     {
-        private readonly HttpClient httpClient;
+        public HttpClient HttpClient { get; set; }
 
         public BackendApiClient(HttpClient httpClient)
         {
-            this.httpClient = httpClient;
+            HttpClient = httpClient;
         }
 
         public string GetBaseUrl()
         {
-            return httpClient.BaseAddress.ToString();
+            return HttpClient.BaseAddress.ToString();
         }
     }
 }

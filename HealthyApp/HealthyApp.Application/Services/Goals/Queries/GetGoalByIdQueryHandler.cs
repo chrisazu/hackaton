@@ -20,7 +20,7 @@ namespace HealthyApp.Application.Services.Goals.Queries
 
         public async Task<GoalResponse> Handle(GetGoalByIdQuery request, CancellationToken cancellationToken)
         {
-            var goal = await _goalRepository.GetById(request.Id, cancellationToken);
+            var goal = await _goalRepository.GetByIdWithUserProgress(request.Id, cancellationToken);
 
             return _mapper.Map<GoalResponse>(goal);
         }

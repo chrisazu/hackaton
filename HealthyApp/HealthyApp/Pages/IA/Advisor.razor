@@ -20,10 +20,10 @@ else
 {
     <EditForm Model="model" OnValidSubmit="HandleSubmit">
         <div class="mb-3">
-            <label for="Type" class="form-label">Tipo</label>
+            <label for="Type" class="form-label">Selecciona un objetivo</label>
             <div class="col-md-2">
                 <InputSelect @bind-Value="model.SelectedGoal" class="form-select">
-                    <option value="">Seleccione</option>
+                    <option value="" selected>Seleccione</option>
                     @foreach (var goal in goals)
                     {
                         <option value="@goal.Id">@goal.Name</option>
@@ -35,6 +35,12 @@ else
                 <button type="submit" class="btn btn-primary">Pedir Consejo</button>
             </div>
         </div>
+        <p style="align-content:end">
+            <strong>@messageSent</strong>
+        </p>
+        <p style="align-content:initial" class="text-success">
+            @messageReceived
+        </p>
     </EditForm>
 }
 
@@ -45,6 +51,8 @@ else
     AdviseRequest model = new AdviseRequest();
 
     private GoalResponse[] goals;
+    string messageSent;
+    string messageReceived;
 
     protected async override Task OnInitializedAsync()
     {
@@ -56,7 +64,9 @@ else
 
     protected async Task HandleSubmit()
     {
-        _advisorService.AskForRecomendations(model);
+        await _advisorService.AskForRecomendations(model);
+        messageSent = model.MessageSent;
+        messageReceived = model.MessageReceived;
     }
 
 
