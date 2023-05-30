@@ -27,13 +27,12 @@ else
             <tr>
                 <th>Nombre</th>
                 <th>Descripción</th>
+                <th>Tipo</th>
                 <th>Duración</th>
                 <th>Frequencia</th>
-                <th>Tiempo de frequencia</th>
-                <th>Kilogramos</th>
-                <th>Tipo</th>
                 <th>Fecha de creación</th>
                 <th>Estado</th>
+                <th>Progreso</th>
                 <th></th>
             </tr>
         </thead>
@@ -42,35 +41,29 @@ else
             {
                 <tr>
                     <td>@goal.Name </td>
-                    <td>@goal.Description </td>                    
+                    <td>@goal.Description </td>
+                    <td>@goal.LabelType </td>
                     <td>
                         @if (!goal.IsDiet)
                         {
-                            @goal.GetLabelDuration
-                        }
-                    </td>
-                    <td>
-                        @if (!goal.IsDiet)
-                        {
-                            @goal.GetLabelFrequency
+                            @goal.LabelDuration
                         }
                     </td>
                     <td>
                         @if (!goal.IsDiet)
                         {
-                            @goal.GetLabelTimesPerFrequency
+                            @goal.LabelTimesPerFrequency
                         }
                     </td>
-                    <td>
-                        @if (goal.IsDiet)
-                        {
-                            @goal.Kilograms
-                        }
-                    </td>
-                    <td>@goal.Type </td>
                     <td>@goal.CreatedDate.ToShortDateString()</td>
-                    <td>@goal.Status</td>
-                    <td><a href="@string.Format("goals/add-progress/{0}",goal.Id)">Agregar progreso</a></td>
+                    <td>@goal.LabelStatus</td>
+                    <td>@goal.ShowProgress</td>
+                    <td>
+                        @if (!goal.IsGoalAccomplished)
+                        {
+                            <a href="@string.Format("goals/add-progress/{0}",goal.Id)">Agregar progreso</a>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>

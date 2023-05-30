@@ -4,8 +4,6 @@ using HealthyApp.Models.Requests;
 using HealthyApp.Models.Responses;
 using HealthyApp.Services.Interfaces;
 
-using NuGet.Protocol;
-
 namespace HealthyApp.Services
 {
     public class GoalService : IGoalService

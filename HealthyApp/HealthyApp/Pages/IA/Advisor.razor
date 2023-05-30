@@ -10,8 +10,6 @@
 
 <h3>Consejero</h3>
 
-
-
 @if (goals == null)
 {
     <p><em>Cargando tus objetivos...</em></p>
@@ -20,10 +18,9 @@ else
 {
     <EditForm Model="model" OnValidSubmit="HandleSubmit">
         <div class="mb-3">
-            <label for="Type" class="form-label">Selecciona un objetivo</label>
+            <label for="Type" class="form-label">Objetivos</label>
             <div class="col-md-2">
                 <InputSelect @bind-Value="model.SelectedGoal" class="form-select">
-                    <option value="" selected>Seleccione</option>
                     @foreach (var goal in goals)
                     {
                         <option value="@goal.Id">@goal.Name</option>
@@ -32,7 +29,13 @@ else
             </div>
             <br />
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Pedir Consejo</button>
+                <button type="submit" class="btn btn-primary">Pedir consejo</button>
+                @if (showSpinner)
+                {
+                    <br />
+                    <p>Esperando respuesta...</p>
+                    <div class="spinner-border" role="status"></div>
+                }
             </div>
         </div>
         <p style="align-content:end">
@@ -44,11 +47,11 @@ else
     </EditForm>
 }
 
-
-
-
 @code {
-    AdviseRequest model = new AdviseRequest();
+
+    AdviseRequest model = new();
+
+    private bool showSpinner = false;
 
     private GoalResponse[] goals;
     string messageSent;
@@ -58,17 +61,18 @@ else
     {
         var userId = int.Parse(httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "userId")?.Value);
 
-        var requ = new Models.Requests.GoalRequest() { UserId = userId };
-        goals = await _goalService.GetByUserId(requ);
+        var request = new Models.Requests.GoalRequest() { UserId = userId };
+        goals = await _goalService.GetByUserId(request);
     }
 
     protected async Task HandleSubmit()
     {
+        messageSent = string.Empty;
+        messageReceived = string.Empty;
+        showSpinner = true;
         await _advisorService.AskForRecomendations(model);
         messageSent = model.MessageSent;
         messageReceived = model.MessageReceived;
+        showSpinner = false;
     }
-
-
-
 }

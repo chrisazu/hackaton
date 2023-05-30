@@ -21,10 +21,12 @@
     {
         foreach (var reward in user.Level.Rewards)
         {
-            <h3>Por ser @reward.Name, @reward.Description.ToLower().</h3>
+            <h3>Por llegar a @reward.Name, @reward.Description.ToLower().</h3>
         }
     }
 }
+
+<h5>¡A medida que cumplás más objetivos, vas a ganar más recompensas!</h5>
 
 @code {
     private HealthyUserResponse user;

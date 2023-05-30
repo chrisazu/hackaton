@@ -10,7 +10,7 @@
 
 		public string Type { get; set; }
 
-		public string Status { get; private set; }
+		public int Status { get; private set; }
 
 		public string Frequency { get; set; }
 
@@ -22,6 +22,6 @@
 
         public DateTime CreatedDate { get; set; }
 
-        public List<ProgressResponse> Progesses { get; set; }
+        public List<ProgressResponse> Progresses { get; set; }
     }
 }

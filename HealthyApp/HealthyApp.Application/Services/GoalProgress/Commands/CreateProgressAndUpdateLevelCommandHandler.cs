@@ -51,6 +51,8 @@ namespace HealthyApp.Application.Services.GoalProgress.Commands
 
             await _goalRepository.Update(goal, cancellationToken);
 
+            var response = _mapper.Map<ProgressResponse>(progress);
+
             if (user.ShouldLevelBeUpdated())
             {
                 var idNextLevel = user.Level.Id + 1;
@@ -66,9 +68,11 @@ namespace HealthyApp.Application.Services.GoalProgress.Commands
                 user.Level.Rewards.Add(nextReward);
 
                 await _healthyUserRepository.Update(user, cancellationToken);
+
+                response.NewLevel = nextLevel;
             }
 
-            return _mapper.Map<ProgressResponse>(progress);
+            return response;
         }
     }
 }

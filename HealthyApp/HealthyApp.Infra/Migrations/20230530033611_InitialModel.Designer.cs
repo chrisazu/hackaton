@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthyApp.Infra.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230530000626_InitialModel")]
+    [Migration("20230530033611_InitialModel")]
     partial class InitialModel
     {
         /// <inheritdoc />
@@ -138,7 +138,7 @@ namespace HealthyApp.Infra.Migrations
                             Description = "Estás como Angelina Jolie",
                             Name = "Expert",
                             Number = 6,
-                            Url = ""
+                            Url = "https://m.media-amazon.com/images/M/MV5BODg3MzYwMjE4N15BMl5BanBnXkFtZTcwMjU5NzAzNw@@.jpg"
                         },
                         new
                         {
@@ -146,7 +146,7 @@ namespace HealthyApp.Infra.Migrations
                             Description = "Estás como Tom Hardy",
                             Name = "Elite",
                             Number = 7,
-                            Url = ""
+                            Url = "https://m.media-amazon.com/images/M/MV5BMTQ3ODEyNjA4Nl5BMl5BanBnXkFtZTgwMTE4ODMyMjE@.jpg"
                         },
                         new
                         {
@@ -154,7 +154,7 @@ namespace HealthyApp.Infra.Migrations
                             Description = "Estás como Gal Gadot",
                             Name = "Grandmaster",
                             Number = 8,
-                            Url = ""
+                            Url = "https://m.media-amazon.com/images/M/MV5BNzgxYTA2OTUtYmE0ZC00ZTc0LWJjY2QtOTIzMTJhNGUyZjBlXkEyXkFqcGdeQXVyMTg4NDI0NDM@.jpg"
                         },
                         new
                         {
@@ -162,7 +162,7 @@ namespace HealthyApp.Infra.Migrations
                             Description = "Estás como Chris Hemsworth",
                             Name = "Masterful",
                             Number = 9,
-                            Url = ""
+                            Url = "https://m.media-amazon.com/images/M/MV5BOTU2MTI0NTIyNV5BMl5BanBnXkFtZTcwMTA4Nzc3OA@@.jpg"
                         },
                         new
                         {
@@ -223,61 +223,61 @@ namespace HealthyApp.Infra.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Tenés descuento en tiendas D1",
+                            Description = "tenés descuento en tiendas D1",
                             Name = "Beginner"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "Tenés descuento en tiendas Ara",
+                            Description = "tenés descuento en tiendas Ara",
                             Name = "Intermediate"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Tenés descuento en tiendas Éxito",
+                            Description = "tenés descuento en tiendas Éxito",
                             Name = "Upper Intermediate"
                         },
                         new
                         {
                             Id = 4,
-                            Description = "Tenés descuento en tiendas Olympica",
+                            Description = "tenés descuento en tiendas Olympica",
                             Name = "Advanced"
                         },
                         new
                         {
                             Id = 5,
-                            Description = "Tenés descuento en tiendas Carulla",
+                            Description = "tenés descuento en tiendas Carulla",
                             Name = "Skilled"
                         },
                         new
                         {
                             Id = 6,
-                            Description = "Tenés descuento en tiendas Jumbo",
+                            Description = "tenés descuento en tiendas Jumbo",
                             Name = "Expert"
                         },
                         new
                         {
                             Id = 7,
-                            Description = "Tenés descuento en tiendas Metro",
+                            Description = "tenés descuento en tiendas Metro",
                             Name = "Elite"
                         },
                         new
                         {
                             Id = 8,
-                            Description = "Tenés descuento en tiendas SmartFit",
+                            Description = "tenés descuento en tiendas SmartFit",
                             Name = "Grandmaster"
                         },
                         new
                         {
                             Id = 9,
-                            Description = "Tenés descuento en tiendas Adidas",
+                            Description = "tenés descuento en tiendas Adidas",
                             Name = "Masterful"
                         },
                         new
                         {
                             Id = 10,
-                            Description = "Tenés descuento en tiendas Decathlon",
+                            Description = "tenés descuento en tiendas Decathlon",
                             Name = "Champion"
                         });
                 });

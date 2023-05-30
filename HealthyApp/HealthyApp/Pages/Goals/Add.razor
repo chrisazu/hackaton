@@ -14,7 +14,7 @@
 @inject IGoalService _goalService
 @inject IHttpContextAccessor httpContextAccessor
 
-<h2><span class="oi oi-plus" aria-hidden="true"></span> Agregar objetivo</h2>
+<h2>Agregar objetivo</h2>
 <hr />
 <EditForm Model="model" OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
@@ -22,9 +22,9 @@
         <label for="Type" class="form-label">Tipo</label>
         <div class="col-md-2">
             <InputSelect id="Type" class="form-select" @bind-Value="model.Type">
-                <option selected value="1">Ejercicio</option>
+                <option selected value="1">Hacer ejercicio</option>
                 <option value="2">Bajar de peso</option>
-                <option value="3">Meditación</option>
+                <option value="3">Meditar</option>
             </InputSelect>
         </div>
     </div>

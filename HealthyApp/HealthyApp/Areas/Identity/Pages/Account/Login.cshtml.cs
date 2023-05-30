@@ -119,7 +119,7 @@ namespace HealthyApp.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     var request = new HealthyUserRequest();
-                    var loggedUser = _signInManager.UserManager.Users.First();
+                    var loggedUser = _signInManager.UserManager.Users.First(u => u.Email == Input.Email);
                     request.AspNetUserId = loggedUser.Id;
                     
                     var response = await _healthyUserService.Get(request);

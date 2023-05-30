@@ -23,27 +23,22 @@ namespace HealthyApp.Application.Services.Goals.Queries
         {
             var goals = await _goalRepository.GetByUserId(request.UserId, cancellationToken);
 
-            var pepe = new List<GoalResponse>();
+            var goalResponse = new List<GoalResponse>();
 
             foreach (var userGoal in goals)
             {
                 if (userGoal is ExerciseGoal)
                 {
-                    var asd = userGoal as ExerciseGoal;
-
-                    pepe.Add(_mapper.Map<GoalResponse>(asd));
+                    goalResponse.Add(_mapper.Map<GoalResponse>(userGoal as ExerciseGoal));
                 }
 
                 if (userGoal is DietGoal)
                 {
-                    var asd = userGoal as DietGoal;
-
-                    pepe.Add(_mapper.Map<GoalResponse>(asd));
+                    goalResponse.Add(_mapper.Map<GoalResponse>(userGoal as DietGoal));
                 }
             }
 
-            //return _mapper.Map<IEnumerable<GoalResponse>>(goals);
-            return pepe;
+            return goalResponse;
         }
     }
 }

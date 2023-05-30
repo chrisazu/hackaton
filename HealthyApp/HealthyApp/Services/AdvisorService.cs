@@ -1,29 +1,26 @@
-﻿using System.Text;
-using System.Text.Json;
-using System.Web.Http;
+﻿using System.Text.Json;
 
 using HealthyApp.Models.Requests;
 using HealthyApp.Models.Responses;
 using HealthyApp.Services.Interfaces;
 
-using Microsoft.AspNetCore.Http;
-
 namespace HealthyApp.Services
 {
     public class AdvisorService : IAdvisorService
     {
-
         private readonly ChatGptApiClient _chatGptClient;
         private readonly BackendApiClient _backApiClient;
         private readonly ILogger<GoalService> _logger;
-        IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _config;
 
-        public AdvisorService(ChatGptApiClient chatGptClient, BackendApiClient backApiClient, ILogger<GoalService> logger, IHttpContextAccessor httpContextAccessor)
+        public AdvisorService(ChatGptApiClient chatGptClient, BackendApiClient backApiClient, ILogger<GoalService> logger, IHttpContextAccessor httpContextAccessor, IConfiguration config)
         {
             _chatGptClient = chatGptClient;
             _backApiClient = backApiClient;
             _logger = logger;
             _httpContextAccessor = httpContextAccessor;
+            _config = config;
         }
 
         public async Task AskForRecomendations(AdviseRequest request)
@@ -38,32 +35,31 @@ namespace HealthyApp.Services
 
                     string message = CreateMessage(goalResponse);
 
-                    ChatGptModel model = new ChatGptModel()
+                    ChatGptModel model = new()
                     {
-                        Model = "gpt-3.5-turbo",
+                        Model = _config.GetSection("AI").GetValue<string>("model"),
                         Messages = new List<Message>()
                         {
                             new Message()
                             {
-                                Role="system",
-                                Content="You are ChatGPT, a large language model trained by OpenAI."
+                                Role = "system",
+                                Content = _config.GetSection("AI").GetValue<string>("role")
                             },
                             new Message()
                             {
-                                Role="user",
-                                Content=message
+                                Role = "user",
+                                Content = message
                             }
                         }
                     };
 
+                    HttpRequestMessage requestMessage = new()
+                    {
+                        Method = HttpMethod.Post,
+                        Content = JsonContent.Create(model)
+                    };
 
-                    HttpRequestMessage requestMessage = new HttpRequestMessage();
-                    requestMessage.Method = HttpMethod.Post;
-                    requestMessage.Content = JsonContent.Create(model);
-
-
-                    _chatGptClient.HttpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "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");
-
+                    _chatGptClient.HttpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _config.GetSection("AI").GetValue<string>("token"));
 
                     HttpResponseMessage responseMessage = await _chatGptClient.HttpClient.SendAsync(requestMessage);
 
@@ -81,7 +77,6 @@ namespace HealthyApp.Services
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -92,17 +87,14 @@ namespace HealthyApp.Services
 
         private string CreateMessage(GoalResponse? goal)
         {
-            string text = string.Empty;
-            if (goal.Type != "Diet")
+            if (goal.IsDiet)
             {
-                text = $"Mi objetivo es {goal.Type} por {goal.Duration}, {goal.TimesPerFrequency} veces por {goal.Frequency}";
+                return $"Mi objetivo es bajar {goal.Kilograms} Kilogramos";
             }
             else
             {
-                text = $"Mi objetivo es bajar {goal.Kilograms} Kilogramos";
+                return $"Mi objetivo es {goal.LabelType} por {goal.LabelDuration} {goal.LabelTimesPerFrequency}";                
             }
-
-            return text;
         }
     }
 }

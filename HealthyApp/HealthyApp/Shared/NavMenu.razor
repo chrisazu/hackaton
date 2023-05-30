@@ -1,4 +1,7 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">HealthyApp</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -7,6 +10,8 @@
     </div>
 </div>
 
+@if (userAuthenticated)
+{
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
@@ -21,13 +26,19 @@
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="advisor/index">
-                <span class="oi oi-plus" aria-hidden="true"></span> Consejero
+                <span class="oi oi-chat" aria-hidden="true"></span> Consejero
             </NavLink>
         </div>
     </nav>
 </div>
+}
+
+
 
 @code {
+
+    private bool userAuthenticated;
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -35,5 +46,11 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        userAuthenticated = authState.User.Identity.IsAuthenticated;
     }
 }

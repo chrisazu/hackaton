@@ -21,16 +21,12 @@ namespace HealthyApp.Domain.Models
         public GoalType Type { get; set; }
 
         [Required]
-        public GoalStatus Status { get; set; }
+        public GoalStatus Status { get; set; } = GoalStatus.Planned;
 
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         public virtual User User { get; set; }
 
         public abstract void AddProgress(Progress goalProgress);
-
-        //public virtual DietGoal DietGoal { get; set; }
-
-        //public virtual ExercisesGoal ExercisesGoal { get; set; }
     }
 }

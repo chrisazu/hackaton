@@ -350,10 +350,10 @@ namespace HealthyApp.Infra.Migrations
                     { 3, "Estás como Chris Pratt", "Upper Intermediate", 3, "https://m.media-amazon.com/images/M/MV5BZjdkYjg1NzMtOTY2YS00ZWI1LWEwZWYtOTU1YTM2ODA2ZWY5XkEyXkFqcGdeQXVyMTM1MjAxMDc3.jpg" },
                     { 4, "Estás como Scarlett Johansson", "Advanced", 4, "https://m.media-amazon.com/images/M/MV5BMTM3OTUwMDYwNl5BMl5BanBnXkFtZTcwNTUyNzc3Nw@@.jpg" },
                     { 5, "Estás como Dwayne Johnson", "Skilled", 5, "https://m.media-amazon.com/images/M/MV5BMTkyNDQ3NzAxM15BMl5BanBnXkFtZTgwODIwMTQ0NTE@.jpg" },
-                    { 6, "Estás como Angelina Jolie", "Expert", 6, "" },
-                    { 7, "Estás como Tom Hardy", "Elite", 7, "" },
-                    { 8, "Estás como Gal Gadot", "Grandmaster", 8, "" },
-                    { 9, "Estás como Chris Hemsworth", "Masterful", 9, "" },
+                    { 6, "Estás como Angelina Jolie", "Expert", 6, "https://m.media-amazon.com/images/M/MV5BODg3MzYwMjE4N15BMl5BanBnXkFtZTcwMjU5NzAzNw@@.jpg" },
+                    { 7, "Estás como Tom Hardy", "Elite", 7, "https://m.media-amazon.com/images/M/MV5BMTQ3ODEyNjA4Nl5BMl5BanBnXkFtZTgwMTE4ODMyMjE@.jpg" },
+                    { 8, "Estás como Gal Gadot", "Grandmaster", 8, "https://m.media-amazon.com/images/M/MV5BNzgxYTA2OTUtYmE0ZC00ZTc0LWJjY2QtOTIzMTJhNGUyZjBlXkEyXkFqcGdeQXVyMTg4NDI0NDM@.jpg" },
+                    { 9, "Estás como Chris Hemsworth", "Masterful", 9, "https://m.media-amazon.com/images/M/MV5BOTU2MTI0NTIyNV5BMl5BanBnXkFtZTcwMTA4Nzc3OA@@.jpg" },
                     { 10, "Estás como Arnold Schwarzenegger", "Champion", 10, "https://m.media-amazon.com/images/M/MV5BMTI3MDc4NzUyMV5BMl5BanBnXkFtZTcwMTQyMTc5MQ@@.jpg" }
                 });
 
@@ -362,16 +362,16 @@ namespace HealthyApp.Infra.Migrations
                 columns: new[] { "Id", "Description", "LevelId", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Tenés descuento en tiendas D1", null, "Beginner" },
-                    { 2, "Tenés descuento en tiendas Ara", null, "Intermediate" },
-                    { 3, "Tenés descuento en tiendas Éxito", null, "Upper Intermediate" },
-                    { 4, "Tenés descuento en tiendas Olympica", null, "Advanced" },
-                    { 5, "Tenés descuento en tiendas Carulla", null, "Skilled" },
-                    { 6, "Tenés descuento en tiendas Jumbo", null, "Expert" },
-                    { 7, "Tenés descuento en tiendas Metro", null, "Elite" },
-                    { 8, "Tenés descuento en tiendas SmartFit", null, "Grandmaster" },
-                    { 9, "Tenés descuento en tiendas Adidas", null, "Masterful" },
-                    { 10, "Tenés descuento en tiendas Decathlon", null, "Champion" }
+                    { 1, "tenés descuento en tiendas D1", null, "Beginner" },
+                    { 2, "tenés descuento en tiendas Ara", null, "Intermediate" },
+                    { 3, "tenés descuento en tiendas Éxito", null, "Upper Intermediate" },
+                    { 4, "tenés descuento en tiendas Olympica", null, "Advanced" },
+                    { 5, "tenés descuento en tiendas Carulla", null, "Skilled" },
+                    { 6, "tenés descuento en tiendas Jumbo", null, "Expert" },
+                    { 7, "tenés descuento en tiendas Metro", null, "Elite" },
+                    { 8, "tenés descuento en tiendas SmartFit", null, "Grandmaster" },
+                    { 9, "tenés descuento en tiendas Adidas", null, "Masterful" },
+                    { 10, "tenés descuento en tiendas Decathlon", null, "Champion" }
                 });
 
             migrationBuilder.CreateIndex(

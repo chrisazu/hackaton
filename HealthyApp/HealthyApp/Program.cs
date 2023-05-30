@@ -23,7 +23,7 @@ builder.Services.AddHttpClient<BackendApiClient>(client =>
 
 builder.Services.AddHttpClient<ChatGptApiClient>(client =>
 {
-    client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ChatGptUri"));
+    client.BaseAddress = new Uri(builder.Configuration.GetSection("AI").GetValue<string>("ChatGptUri"));
 });
 
 builder.Services.AddTransient<IHealthyUserService, HealthyApp.Services.HealthyUserService>();

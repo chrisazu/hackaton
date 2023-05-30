@@ -5,5 +5,7 @@
         public int Id { get; set; }
 
         public TimeSpan Value { get; set; }
+
+        public int KilogramsLost { get; set; }
     }
 }

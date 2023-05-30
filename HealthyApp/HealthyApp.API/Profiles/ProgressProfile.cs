@@ -20,6 +20,12 @@ namespace HealthyApp.API.Profiles
 
             CreateMap<Progress, ProgressResponse>();
 
+            CreateMap<DietProgress, ProgressResponse>()
+                .ForMember(m => m.KilogramsLost, dest => dest.MapFrom(src => src.KilogramsLost));
+
+            CreateMap<ExerciseProgress, ProgressResponse>()
+                .ForMember(m => m.Value, dest => dest.MapFrom(src => src.DurationInMinutes));
+
             CreateMap<CreateProgressAndUpdateLevelCommand, DietProgress>()
                 .ForMember(m => m.KilogramsLost, dest => dest.MapFrom(src => src.Value));
 
