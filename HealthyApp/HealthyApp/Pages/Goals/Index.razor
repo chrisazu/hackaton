@@ -1,4 +1,6 @@
 ﻿@page "/goals/index"
+@page "/goals/index/{action}"
+@using Blazored.Toast.Services;
 @using HealthyApp.Models.Requests;
 @using HealthyApp.Models.Responses;
 @using HealthyApp.Services.Interfaces;
@@ -6,6 +8,7 @@
 @using Microsoft.AspNetCore.Identity;
 @using Microsoft.AspNetCore.Http
 
+@inject IToastService toastService
 @inject IGoalService _goalService
 @inject SignInManager<IdentityUser> _signInManager
 @inject IHealthyUserService _healthyUserService
@@ -80,6 +83,9 @@ else
 
 @code {
 
+#nullable enable
+    [Parameter]
+    public string? action { get; set; }
     private GoalResponse[] goals;
 
     protected async override Task OnInitializedAsync()
@@ -88,5 +94,19 @@ else
 
         var request = new Models.Requests.GoalRequest() { UserId = userId };
         goals = await _goalService.GetByUserId(request);
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            if (!string.IsNullOrWhiteSpace(action))
+            {
+                if (action == "added")
+                {
+                    toastService.ShowSuccess("Objetivo agregado correctamente");
+                }
+            }
+        }
     }
 }

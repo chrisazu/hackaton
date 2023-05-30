@@ -1,3 +1,5 @@
+using Blazored.Toast;
+
 using HealthyApp.Areas.Identity;
 using HealthyApp.Extensions;
 using HealthyApp.Infra;
@@ -38,6 +40,8 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
 builder.Services.AddHttpClient();
+
+builder.Services.AddBlazoredToast();
 
 //builder.Services.AddHttpContextAccessor();
 
