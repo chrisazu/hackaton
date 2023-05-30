@@ -21,5 +21,7 @@
         public TimeSpan Duration { get; set; }
 
         public DateTime CreatedDate { get; set; }
+
+        public List<ProgressResponse> Progesses { get; set; }
     }
 }

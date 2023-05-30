@@ -1,0 +1,74 @@
+﻿@page "/advisor/index"
+@using HealthyApp.Models.Requests;
+@using HealthyApp.Models.Responses;
+@using HealthyApp.Services.Interfaces;
+@using Microsoft.AspNetCore.Http
+
+@inject IHttpContextAccessor httpContextAccessor
+@inject IGoalService _goalService
+@inject IAdvisorService _advisorService
+
+<h3>Consejero</h3>
+
+
+
+@if (goals == null)
+{
+    <p><em>Cargando tus objetivos...</em></p>
+}
+else
+{
+    <EditForm Model="model" OnValidSubmit="HandleSubmit">
+        <div class="mb-3">
+            <label for="Type" class="form-label">Selecciona un objetivo</label>
+            <div class="col-md-2">
+                <InputSelect @bind-Value="model.SelectedGoal" class="form-select">
+                    <option value="" selected>Seleccione</option>
+                    @foreach (var goal in goals)
+                    {
+                        <option value="@goal.Id">@goal.Name</option>
+                    }
+                </InputSelect>
+            </div>
+            <br />
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Pedir Consejo</button>
+            </div>
+        </div>
+        <p style="align-content:end">
+            <strong>@messageSent</strong>
+        </p>
+        <p style="align-content:initial" class="text-success">
+            @messageReceived
+        </p>
+    </EditForm>
+}
+
+
+
+
+@code {
+    AdviseRequest model = new AdviseRequest();
+
+    private GoalResponse[] goals;
+    string messageSent;
+    string messageReceived;
+
+    protected async override Task OnInitializedAsync()
+    {
+        var userId = int.Parse(httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "userId")?.Value);
+
+        var requ = new Models.Requests.GoalRequest() { UserId = userId };
+        goals = await _goalService.GetByUserId(requ);
+    }
+
+    protected async Task HandleSubmit()
+    {
+        await _advisorService.AskForRecomendations(model);
+        messageSent = model.MessageSent;
+        messageReceived = model.MessageReceived;
+    }
+
+
+
+}

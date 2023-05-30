@@ -8,10 +8,10 @@ namespace HealthyApp.Services
 {
     public class GoalProgressService : IGoalProgressService
     {
-        private readonly HttpClient _client;
+        private readonly BackendApiClient _client;
         private readonly ILogger<GoalService> _logger;
 
-        public GoalProgressService(HttpClient client, ILogger<GoalService> logger)
+        public GoalProgressService(BackendApiClient client, ILogger<GoalService> logger)
         {
             _client = client;
             _logger = logger;
@@ -20,7 +20,7 @@ namespace HealthyApp.Services
         {
             try
             {
-                HttpResponseMessage response = await _client.PostAsJsonAsync($"goal/{request.GoalId}/progress", request);
+                HttpResponseMessage response = await _client.HttpClient.PostAsJsonAsync($"goal/{request.GoalId}/progress", request);
 
                 if (response.IsSuccessStatusCode)
                 {

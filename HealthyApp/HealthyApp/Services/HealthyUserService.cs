@@ -8,10 +8,10 @@ namespace HealthyApp.Services
 {
     public class HealthyUserService : IHealthyUserService
     {
-        private readonly HttpClient _client;
+        private readonly BackendApiClient _client;
         private readonly ILogger<HealthyUserService> _logger;
 
-        public HealthyUserService(HttpClient client, ILogger<HealthyUserService> logger)
+        public HealthyUserService(BackendApiClient client, ILogger<HealthyUserService> logger)
         {
             _client = client;
             _logger = logger;
@@ -21,7 +21,7 @@ namespace HealthyApp.Services
         {
             try
             {
-                HttpResponseMessage response = await _client.PostAsJsonAsync("users", request);
+                HttpResponseMessage response = await _client.HttpClient.PostAsJsonAsync("users", request);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -41,7 +41,7 @@ namespace HealthyApp.Services
         {
             try
             {
-                HttpResponseMessage response = await _client.GetAsync($"users/GetUserByAspNetUserId/{request.AspNetUserId}");
+                HttpResponseMessage response = await _client.HttpClient.GetAsync($"users/GetUserByAspNetUserId/{request.AspNetUserId}");
 
                 if (response.IsSuccessStatusCode)
                 {

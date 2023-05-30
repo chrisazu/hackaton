@@ -29,5 +29,7 @@
         public DateTime CreatedDate { get; set; }
 
         public string GetLabelDuration { get { return $"{Duration} horas"; } }
+
+        public List<ProgressResponse> Progesses { get; set; }
     }
 }
